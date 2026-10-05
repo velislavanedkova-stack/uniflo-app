@@ -3,39 +3,41 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UniFlo 🎓</title>
+<title>UniFlo | Student Life</title>
 
 <style>
+:root {
+    --primary: #7567e8;
+    --primary-dark: #5b4fd0;
+    --secondary: #eeeaff;
+    --background: #f7f6fc;
+    --card: #ffffff;
+    --text: #27233a;
+    --muted: #88849a;
+    --border: #e9e6f2;
+    --danger: #e96b7a;
+    --success: #56b889;
+    --shadow: 0 8px 30px rgba(73, 59, 130, 0.08);
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-:root {
-    --primary: #6366f1;
-    --primary-dark: #4f46e5;
-    --background: #f6f7fb;
-    --card: #ffffff;
-    --text: #202124;
-    --muted: #737373;
-    --border: #e7e7ef;
-    --success: #10b981;
-    --warning: #f59e0b;
-    --danger: #ef4444;
-}
-
 body {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Arial, sans-serif;
     background: var(--background);
     color: var(--text);
+    min-height: 100vh;
 }
 
 button,
 input,
 select,
 textarea {
-    font: inherit;
+    font-family: inherit;
 }
 
 button {
@@ -43,324 +45,477 @@ button {
     border: none;
 }
 
-.hidden {
-    display: none !important;
-}
-
-/* =========================
-   AUTH
-========================= */
-
-.auth {
-    min-height: 100vh;
+.app {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    background:
-        radial-gradient(circle at top left, #e0e7ff, transparent 35%),
-        radial-gradient(circle at bottom right, #fce7f3, transparent 35%),
-        var(--background);
+    min-height: 100vh;
 }
 
-.auth-box {
-    width: 100%;
-    max-width: 500px;
-    background: white;
-    padding: 40px;
-    border-radius: 28px;
-    box-shadow: 0 20px 70px rgba(0,0,0,.09);
+/* SIDEBAR */
+
+.sidebar {
+    width: 250px;
+    background: var(--card);
+    border-right: 1px solid var(--border);
+    padding: 25px 15px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 100;
 }
 
 .logo {
-    font-size: 34px;
-    font-weight: 900;
-    color: var(--primary);
-    margin-bottom: 8px;
-}
-
-.subtitle {
-    color: var(--muted);
-    margin-bottom: 30px;
-    line-height: 1.5;
-}
-
-.auth-box h2 {
-    margin-bottom: 20px;
-}
-
-label {
-    display: block;
-    margin: 15px 0 7px;
-    font-size: 14px;
-    font-weight: 700;
-}
-
-input,
-select,
-textarea {
-    width: 100%;
-    padding: 13px 14px;
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    outline: none;
-    background: white;
-}
-
-input:focus,
-select:focus,
-textarea:focus {
-    border-color: var(--primary);
-}
-
-.primary {
-    width: 100%;
-    margin-top: 20px;
-    padding: 14px;
-    background: var(--primary);
-    color: white;
-    border-radius: 12px;
-    font-weight: 700;
-}
-
-.primary:hover {
-    background: var(--primary-dark);
-}
-
-.secondary {
-    padding: 11px 15px;
-    background: #f0f0f7;
-    color: #333;
-    border-radius: 10px;
-}
-
-.link-btn {
-    display: block;
-    margin: 18px auto 0;
-    background: none;
-    color: var(--primary);
-}
-
-/* =========================
-   APP
-========================= */
-
-.app {
-    min-height: 100vh;
-}
-
-header {
-    height: 70px;
-    background: white;
-    border-bottom: 1px solid var(--border);
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 0 28px;
-    position: sticky;
-    top: 0;
-    z-index: 20;
+    gap: 10px;
+    padding: 0 12px 30px;
 }
 
-.header-logo {
-    font-size: 25px;
-    font-weight: 900;
+.logo-icon {
+    width: 43px;
+    height: 43px;
+    border-radius: 13px;
+    background: linear-gradient(135deg, #7567e8, #9c8df5);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 23px;
+}
+
+.logo h1 {
+    font-size: 24px;
+}
+
+.logo span {
     color: var(--primary);
 }
 
-.user-area {
+.menu-title {
+    color: var(--muted);
+    font-size: 11px;
+    text-transform: uppercase;
+    margin: 10px 15px;
+}
+
+.nav-item {
+    width: 100%;
+    padding: 13px 15px;
+    margin: 4px 0;
+    background: transparent;
+    border-radius: 12px;
+    text-align: left;
+    color: #686477;
+    font-size: 14px;
     display: flex;
     align-items: center;
     gap: 12px;
+    transition: 0.2s;
 }
 
-.avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: var(--primary);
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.nav-item:hover {
+    background: var(--secondary);
+    color: var(--primary);
+}
+
+.nav-item.active {
+    background: var(--secondary);
+    color: var(--primary);
     font-weight: bold;
 }
 
-.layout {
-    display: flex;
+.nav-icon {
+    font-size: 19px;
 }
 
-.sidebar {
-    width: 235px;
-    min-height: calc(100vh - 70px);
-    background: white;
-    border-right: 1px solid var(--border);
-    padding: 22px 14px;
-}
-
-.nav-btn {
-    width: 100%;
-    padding: 13px 15px;
-    text-align: left;
-    background: transparent;
-    color: #555;
-    border-radius: 11px;
-    margin-bottom: 5px;
-}
-
-.nav-btn:hover,
-.nav-btn.active {
-    background: #eef2ff;
-    color: var(--primary-dark);
-    font-weight: 700;
-}
+/* MAIN */
 
 .main {
-    flex: 1;
-    max-width: 1450px;
-    padding: 30px;
+    margin-left: 250px;
+    width: calc(100% - 250px);
+    min-height: 100vh;
+}
+
+.topbar {
+    height: 75px;
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 35px;
+    position: sticky;
+    top: 0;
+    z-index: 50;
 }
 
 .page-title {
-    margin-bottom: 25px;
+    font-size: 22px;
+    font-weight: 700;
 }
 
-.page-title h1 {
+.top-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.icon-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: var(--background);
+    color: var(--text);
+    font-size: 18px;
+}
+
+.content {
+    padding: 35px;
+    max-width: 1400px;
+    margin: auto;
+}
+
+/* DASHBOARD */
+
+.greeting {
+    margin-bottom: 28px;
+}
+
+.greeting h2 {
     font-size: 30px;
     margin-bottom: 7px;
 }
 
-.page-title p {
+.greeting p {
     color: var(--muted);
 }
 
-/* =========================
-   CARDS
-========================= */
-
-.cards {
+.stats {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 17px;
+    gap: 18px;
     margin-bottom: 25px;
 }
 
-.card {
-    background: white;
-    border: 1px solid var(--border);
+.stat-card {
+    background: var(--card);
+    padding: 22px;
     border-radius: 18px;
-    padding: 21px;
+    box-shadow: var(--shadow);
 }
 
-.card small {
-    color: var(--muted);
+.stat-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.number {
+.stat-icon {
+    width: 45px;
+    height: 45px;
+    border-radius: 13px;
+    background: var(--secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+}
+
+.stat-number {
     font-size: 29px;
-    font-weight: 900;
-    color: var(--primary);
-    margin-top: 8px;
+    font-weight: bold;
+    margin-top: 16px;
 }
 
-/* =========================
-   PANELS
-========================= */
+.stat-label {
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 4px;
+}
 
-.grid {
+.dashboard-grid {
     display: grid;
     grid-template-columns: 2fr 1fr;
     gap: 20px;
 }
 
-.panel {
-    background: white;
+.card {
+    background: var(--card);
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: var(--shadow);
     border: 1px solid var(--border);
-    border-radius: 18px;
-    padding: 22px;
-    margin-bottom: 20px;
 }
 
-.panel h2 {
-    margin-bottom: 18px;
-}
-
-.today-item {
-    padding: 15px;
-    background: #f8f8fc;
-    border-radius: 12px;
-    margin-bottom: 10px;
-    border-left: 4px solid var(--primary);
-}
-
-.today-item strong {
-    display: block;
-    margin-bottom: 5px;
-}
-
-.today-item span {
-    color: var(--muted);
-    font-size: 14px;
-}
-
-/* =========================
-   CALENDAR
-========================= */
-
-.calendar-top {
+.card-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 18px;
+    margin-bottom: 20px;
 }
 
-.calendar-grid {
+.card-header h3 {
+    font-size: 18px;
+}
+
+.link-btn {
+    background: transparent;
+    color: var(--primary);
+    font-weight: bold;
+}
+
+/* SCHEDULE */
+
+.schedule-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.schedule-item:last-child {
+    border-bottom: none;
+}
+
+.time {
+    width: 65px;
+    font-size: 13px;
+    color: var(--muted);
+}
+
+.schedule-color {
+    width: 5px;
+    height: 42px;
+    background: var(--primary);
+    border-radius: 5px;
+}
+
+.schedule-info strong {
+    display: block;
+    margin-bottom: 4px;
+}
+
+.schedule-info span {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+/* TASKS */
+
+.task {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.task:last-child {
+    border-bottom: none;
+}
+
+.task input {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--primary);
+}
+
+.task.done span {
+    text-decoration: line-through;
+    color: var(--muted);
+}
+
+/* SECTIONS */
+
+.section {
+    display: none;
+}
+
+.section.active {
+    display: block;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.section-header h2 {
+    font-size: 25px;
+}
+
+/* BUTTONS */
+
+.primary-btn {
+    background: var(--primary);
+    color: white;
+    padding: 11px 17px;
+    border-radius: 11px;
+    font-weight: bold;
+}
+
+.primary-btn:hover {
+    background: var(--primary-dark);
+}
+
+.danger-btn {
+    background: #fff0f2;
+    color: var(--danger);
+    padding: 7px 10px;
+    border-radius: 8px;
+}
+
+/* FORMS */
+
+.form-card {
+    background: var(--card);
+    padding: 25px;
+    border-radius: 18px;
+    margin-bottom: 25px;
+    border: 1px solid var(--border);
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.form-group label {
+    font-size: 13px;
+    color: var(--muted);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    outline: none;
+    background: var(--background);
+    color: var(--text);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.form-full {
+    grid-column: 1 / -1;
+}
+
+/* TABLE */
+
+.table-wrap {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+}
+
+th {
+    color: var(--muted);
+    font-size: 12px;
+}
+
+/* SUBJECTS */
+
+.subject-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.subject-card {
+    background: var(--card);
+    padding: 22px;
+    border-radius: 18px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+}
+
+.subject-icon {
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+
+.subject-card h3 {
+    margin-bottom: 8px;
+}
+
+.subject-card p {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+/* BUDGET */
+
+.budget-total {
+    font-size: 35px;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.income {
+    color: var(--success);
+}
+
+.expense {
+    color: var(--danger);
+}
+
+/* CALENDAR */
+
+.week-grid {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 7px;
+    gap: 10px;
+}
+
+.day-column {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    min-height: 350px;
+    padding: 12px;
 }
 
 .day-name {
     text-align: center;
-    color: var(--muted);
-    font-weight: 700;
+    font-weight: bold;
+    color: var(--primary);
+    margin-bottom: 15px;
+}
+
+.day-event {
+    background: var(--secondary);
     padding: 10px;
-}
-
-.day {
-    min-height: 115px;
-    background: #fafafa;
-    border: 1px solid var(--border);
     border-radius: 10px;
-    padding: 8px;
+    margin-bottom: 8px;
+    font-size: 12px;
 }
 
-.day.today {
-    border: 2px solid var(--primary);
-}
-
-.day-number {
-    font-weight: 800;
-    margin-bottom: 7px;
-}
-
-.event {
-    font-size: 11px;
-    background: #e0e7ff;
-    color: #3730a3;
-    padding: 5px;
-    border-radius: 6px;
-    margin-bottom: 4px;
-}
-
-.work-event {
-    background: #dcfce7;
-    color: #166534;
-}
-
-/* =========================
-   NOTES
-========================= */
+/* NOTES */
 
 .notes-grid {
     display: grid;
@@ -369,10 +524,11 @@ header {
 }
 
 .note {
-    background: white;
-    border: 1px solid var(--border);
-    border-radius: 15px;
-    padding: 18px;
+    background: #fffce9;
+    padding: 20px;
+    min-height: 170px;
+    border-radius: 5px 18px 18px 18px;
+    box-shadow: var(--shadow);
 }
 
 .note h3 {
@@ -380,179 +536,115 @@ header {
 }
 
 .note p {
-    color: #666;
     white-space: pre-wrap;
+    color: #666;
     line-height: 1.5;
 }
 
-.note button {
-    margin-top: 15px;
+/* EMPTY */
+
+.empty {
+    text-align: center;
+    color: var(--muted);
+    padding: 35px;
 }
 
-/* =========================
-   LOCATION
-========================= */
+/* DARK MODE */
 
-.location-box {
-    background: #eef2ff;
-    padding: 16px;
-    border-radius: 13px;
-    margin-top: 15px;
-    color: #3730a3;
+body.dark {
+    --background: #171621;
+    --card: #211f2d;
+    --text: #f2efff;
+    --muted: #aaa5bb;
+    --border: #302d3e;
+    --secondary: #302b4c;
 }
 
-.location-status {
-    font-weight: 700;
+body.dark .note {
+    background: #302d21;
 }
 
-.warning {
-    background: #fff7ed;
-    color: #9a3412;
+body.dark .danger-btn {
+    background: #38252a;
 }
 
-.success {
-    background: #ecfdf5;
-    color: #065f46;
+/* MOBILE */
+
+.mobile-menu {
+    display: none;
 }
 
-/* =========================
-   SMART ANALYSIS
-========================= */
+@media (max-width: 1000px) {
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
 
-.smart-box {
-    background: linear-gradient(135deg, #eef2ff, #faf5ff);
-    border: 1px solid #ddd6fe;
-    border-radius: 18px;
-    padding: 22px;
+    .subject-grid,
+    .notes-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
-.smart-box h2 {
-    margin-bottom: 10px;
-}
-
-.smart-box p {
-    line-height: 1.6;
-    color: #555;
-}
-
-/* =========================
-   MOBILE
-========================= */
-
-@media (max-width: 950px) {
+@media (max-width: 700px) {
 
     .sidebar {
         display: none;
     }
 
-    .cards {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .grid {
-        grid-template-columns: 1fr;
-    }
-
-    .notes-grid {
-        grid-template-columns: 1fr 1fr;
-    }
-}
-
-@media (max-width: 600px) {
-
-    header {
-        padding: 0 14px;
-    }
-
-    .header-logo {
-        font-size: 21px;
-    }
-
-    .user-area span {
-        display: none;
-    }
-
     .main {
-        padding: 18px;
-        padding-bottom: 85px;
+        margin-left: 0;
+        width: 100%;
     }
 
-    .cards {
-        grid-template-columns: 1fr 1fr;
+    .topbar {
+        padding: 0 18px;
+    }
+
+    .mobile-menu {
+        display: block;
+        margin-right: 10px;
+    }
+
+    .content {
+        padding: 20px 15px 90px;
+    }
+
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
         gap: 10px;
     }
 
-    .card {
-        padding: 15px;
+    .stat-card {
+        padding: 16px;
     }
 
-    .number {
-        font-size: 24px;
+    .stat-number {
+        font-size: 23px;
     }
 
-    .calendar-grid {
-        gap: 3px;
+    .form-grid {
+        grid-template-columns: 1fr;
     }
 
-    .day {
-        min-height: 80px;
-        padding: 4px;
-    }
-
-    .day-name {
-        padding: 6px 2px;
-        font-size: 11px;
-    }
-
-    .event {
-        font-size: 8px;
-        padding: 3px;
-    }
-
+    .subject-grid,
     .notes-grid {
         grid-template-columns: 1fr;
     }
 
-    .auth-box {
-        padding: 26px;
-    }
-}
-
-/* MOBILE NAV */
-
-.mobile-nav {
-    display: none;
-}
-
-@media (max-width: 950px) {
-
-    .mobile-nav {
-        display: flex;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 67px;
-        background: white;
-        border-top: 1px solid var(--border);
-        z-index: 50;
-        justify-content: space-around;
-        align-items: center;
+    .week-grid {
+        grid-template-columns: 1fr;
     }
 
-    .mobile-nav button {
-        background: none;
-        color: #666;
-        font-size: 11px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 3px;
+    .day-column {
+        min-height: auto;
     }
 
-    .mobile-nav button.active {
-        color: var(--primary);
-        font-weight: 800;
+    .section-header h2 {
+        font-size: 21px;
     }
 }
 </style>
@@ -560,2102 +652,1431 @@ header {
 
 <body>
 
-<!-- =========================
-     AUTHENTICATION
-========================= -->
-
-<section id="authScreen" class="auth">
-
-<div class="auth-box">
-
-<div class="logo">UniFlo 🎓</div>
-
-<p class="subtitle">
-Твоят университетски живот, организиран на едно място.
-</p>
-
-<!-- LOGIN -->
-
-<div id="loginForm">
-
-<h2>Добре дошъл отново 👋</h2>
-
-<label>Имейл</label>
-<input id="loginEmail" type="email" placeholder="example@email.com">
-
-<label>Парола</label>
-<input id="loginPassword" type="password" placeholder="••••••••">
-
-<button class="primary" onclick="login()">
-Вход
-</button>
-
-<button class="link-btn" onclick="showRegister()">
-Нямаш акаунт? Регистрирай се
-</button>
-
-</div>
-
-<!-- REGISTER -->
-
-<div id="registerForm" class="hidden">
-
-<h2>Създай своя UniFlo 🚀</h2>
-
-<label>Име</label>
-<input id="regName" placeholder="Твоето име">
-
-<label>Имейл</label>
-<input id="regEmail" type="email" placeholder="example@email.com">
-
-<label>Парола</label>
-<input id="regPassword" type="password" placeholder="••••••••">
-
-<label>Първи курс ли си?</label>
-
-<select id="regCourseStatus">
-<option value="first">Да, първи курс</option>
-<option value="higher">Не, по-горен курс</option>
-</select>
-
-<label>Курс</label>
-
-<select id="regYear">
-<option value="1">1 курс</option>
-<option value="2">2 курс</option>
-<option value="3">3 курс</option>
-<option value="4">4 курс</option>
-<option value="5">Магистратура</option>
-</select>
-
-<label>Университет</label>
-<input id="regUniversity" placeholder="Напр. ИУ – Варна">
-
-<label>Град</label>
-<input id="regCity" placeholder="Напр. Варна">
-
-<label>Специалност</label>
-<input id="regSpecialty" placeholder="Напр. Туризъм">
-
-<label>Група</label>
-<input id="regGroup" placeholder="Напр. 12">
-
-<label>Работиш ли?</label>
-
-<select id="regWork">
-<option value="no">Не</option>
-<option value="yes">Да</option>
-</select>
-
-<div class="location-box">
-
-<strong>📍 Местоположение</strong>
-
-<p style="margin-top:7px;line-height:1.5;">
-UniFlo може да използва текущото ти местоположение,
-за да анализира придвижването ти и да прави по-точни
-персонализирани предложения.
-</p>
-
-<button
-class="secondary"
-style="margin-top:10px;"
-onclick="requestLocation()">
-
-📍 Разрешавам местоположение
-
-</button>
-
-<div id="locationStatus"
-class="location-status"
-style="margin-top:10px;">
-
-Местоположението още не е разрешено.
-
-</div>
-
-</div>
-
-<button class="primary" onclick="register()">
-Създай акаунт
-</button>
-
-<button class="link-btn" onclick="showLogin()">
-Вече имам акаунт
-</button>
-
-</div>
-
-</div>
-</section>
-
-
-<!-- =========================
-     APPLICATION
-========================= -->
-
-<section id="app" class="app hidden">
-
-<header>
-
-<div class="header-logo">
-UniFlo 🎓
-</div>
-
-<div class="user-area">
-
-<span id="headerName"></span>
-
-<div class="avatar" id="avatar"></div>
-
-<button class="secondary" onclick="logout()">
-Изход
-</button>
-
-</div>
-
-</header>
-
-
-<div class="layout">
+<div class="app">
 
 <!-- SIDEBAR -->
 
 <aside class="sidebar">
 
-<button class="nav-btn active"
-onclick="showPage('dashboard', this)">
-🏠 Начало
-</button>
+    <div class="logo">
+        <div class="logo-icon">🎓</div>
+        <h1>Uni<span>Flo</span></h1>
+    </div>
 
-<button class="nav-btn"
-onclick="showPage('calendar', this)">
-📅 Календар
-</button>
+    <div class="menu-title">Основно</div>
 
-<button class="nav-btn"
-onclick="showPage('schedule', this)">
-🎓 Университет
-</button>
+    <button class="nav-item active" onclick="showSection('dashboard', this)">
+        <span class="nav-icon">🏠</span> Начало
+    </button>
 
-<button class="nav-btn"
-onclick="showPage('work', this)">
-💼 Работа
-</button>
+    <button class="nav-item" onclick="showSection('schedule', this)">
+        <span class="nav-icon">📅</span> График
+    </button>
 
-<button class="nav-btn"
-onclick="showPage('notes', this)">
-📝 Бележки
-</button>
+    <button class="nav-item" onclick="showSection('subjects', this)">
+        <span class="nav-icon">📚</span> Предмети
+    </button>
 
-<button class="nav-btn"
-onclick="showPage('analysis', this)">
-🧠 Анализ
-</button>
+    <button class="nav-item" onclick="showSection('tasks', this)">
+        <span class="nav-icon">✅</span> Задачи
+    </button>
 
-<button class="nav-btn"
-onclick="showPage('profile', this)">
-⚙️ Профил
-</button>
+    <button class="nav-item" onclick="showSection('exams', this)">
+        <span class="nav-icon">📝</span> Изпити
+    </button>
+
+    <div class="menu-title">Лични</div>
+
+    <button class="nav-item" onclick="showSection('budget', this)">
+        <span class="nav-icon">💰</span> Бюджет
+    </button>
+
+    <button class="nav-item" onclick="showSection('dorm', this)">
+        <span class="nav-icon">🏠</span> Общежитие
+    </button>
+
+    <button class="nav-item" onclick="showSection('notes', this)">
+        <span class="nav-icon">🗒️</span> Бележки
+    </button>
 
 </aside>
 
 
+<!-- MAIN -->
+
 <main class="main">
 
+    <div class="topbar">
+        <div style="display:flex;align-items:center;">
+            <button class="icon-btn mobile-menu" onclick="toggleMobileMenu()">☰</button>
+            <div class="page-title" id="pageTitle">Начало</div>
+        </div>
+
+        <div class="top-actions">
+            <button class="icon-btn" onclick="toggleDarkMode()">🌙</button>
+        </div>
+    </div>
 
-<!-- =========================
-     DASHBOARD
-========================= -->
 
-<div id="dashboard" class="page">
+    <div class="content">
 
-<div class="page-title">
+        <!-- DASHBOARD -->
 
-<h1>
-Здравей, <span id="welcomeName"></span> 👋
-</h1>
+        <section id="dashboard" class="section active">
 
-<p id="studentInfo"></p>
+            <div class="greeting">
+                <h2>Здравей, студенте! 👋</h2>
+                <p>Нека направим университетския хаос поне малко организиран.</p>
+            </div>
 
-</div>
+            <div class="stats">
 
+                <div class="stat-card">
+                    <div class="stat-top">
+                        <span>Задачи</span>
+                        <div class="stat-icon">✅</div>
+                    </div>
+                    <div class="stat-number" id="taskCount">0</div>
+                    <div class="stat-label">оставащи задачи</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-top">
+                        <span>Изпити</span>
+                        <div class="stat-icon">📝</div>
+                    </div>
+                    <div class="stat-number" id="examCount">0</div>
+                    <div class="stat-label">предстоящи изпити</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-top">
+                        <span>Предмети</span>
+                        <div class="stat-icon">📚</div>
+                    </div>
+                    <div class="stat-number" id="subjectCount">0</div>
+                    <div class="stat-label">текущи предмети</div>
+                </div>
 
-<div class="cards">
+                <div class="stat-card">
+                    <div class="stat-top">
+                        <span>Баланс</span>
+                        <div class="stat-icon">💰</div>
+                    </div>
+                    <div class="stat-number" id="balance">0 лв.</div>
+                    <div class="stat-label">текущ баланс</div>
+                </div>
 
-<div class="card">
+            </div>
 
-<small>Курс</small>
 
-<div class="number" id="courseCard">
--
-</div>
+            <div class="dashboard-grid">
 
-</div>
+                <div class="card">
 
+                    <div class="card-header">
+                        <h3>📅 Днешният график</h3>
+                        <button class="link-btn" onclick="showSectionByName('schedule')">
+                            Виж графика
+                        </button>
+                    </div>
 
-<div class="card">
+                    <div id="todaySchedule">
+                        <div class="empty">
+                            Няма добавени занятия.
+                        </div>
+                    </div>
 
-<small>Занятия днес</small>
+                </div>
 
-<div class="number" id="todayClasses">
-0
-</div>
 
-</div>
+                <div class="card">
 
+                    <div class="card-header">
+                        <h3>✅ Моите задачи</h3>
+                        <button class="link-btn" onclick="showSectionByName('tasks')">
+                            Всички
+                        </button>
+                    </div>
 
-<div class="card">
+                    <div id="dashboardTasks">
+                        <div class="empty">
+                            Няма задачи.
+                        </div>
+                    </div>
 
-<small>Работа днес</small>
+                </div>
 
-<div class="number" id="todayWork">
-0
-</div>
+            </div>
 
-</div>
+        </section>
 
 
-<div class="card">
+        <!-- SCHEDULE -->
 
-<small>Бележки</small>
+        <section id="schedule" class="section">
 
-<div class="number" id="notesCount">
-0
-</div>
+            <div class="section-header">
+                <h2>📅 Седмичен график</h2>
+            </div>
 
-</div>
+            <div class="form-card">
 
-</div>
+                <div class="form-grid">
 
+                    <div class="form-group">
+                        <label>Ден</label>
+                        <select id="scheduleDay">
+                            <option>Понеделник</option>
+                            <option>Вторник</option>
+                            <option>Сряда</option>
+                            <option>Четвъртък</option>
+                            <option>Петък</option>
+                            <option>Събота</option>
+                            <option>Неделя</option>
+                        </select>
+                    </div>
 
-<div class="grid">
+                    <div class="form-group">
+                        <label>Час</label>
+                        <input type="time" id="scheduleTime">
+                    </div>
 
-<div class="panel">
+                    <div class="form-group">
+                        <label>Предмет</label>
+                        <input type="text" id="scheduleSubject" placeholder="Напр. Икономика">
+                    </div>
 
-<h2>📅 Днешният ти график</h2>
+                    <div class="form-group">
+                        <label>Зала</label>
+                        <input type="text" id="scheduleRoom" placeholder="Напр. 214">
+                    </div>
 
-<div id="todaySchedule">
+                </div>
 
-<div class="today-item">
+                <br>
 
-<strong>
-09:00 – 10:30 · Икономика
-</strong>
+                <button class="primary-btn" onclick="addSchedule()">
+                    + Добави занятие
+                </button>
 
-<span>
-Зала 201
-</span>
+            </div>
 
-</div>
+            <div class="week-grid" id="weekGrid"></div>
 
-<div class="today-item">
+        </section>
 
-<strong>
-11:00 – 12:30 · Туризъм
-</strong>
 
-<span>
-Зала 305
-</span>
+        <!-- SUBJECTS -->
 
-</div>
+        <section id="subjects" class="section">
 
-</div>
+            <div class="section-header">
+                <h2>📚 Моите предмети</h2>
+                <button class="primary-btn" onclick="toggleForm('subjectForm')">
+                    + Добави предмет
+                </button>
+            </div>
 
-</div>
+            <div id="subjectForm" class="form-card" style="display:none;">
 
+                <div class="form-grid">
 
-<div class="smart-box">
+                    <div class="form-group">
+                        <label>Име на предмета</label>
+                        <input type="text" id="subjectName">
+                    </div>
 
-<h2>
-🧠 UniFlo Smart
-</h2>
+                    <div class="form-group">
+                        <label>Преподавател</label>
+                        <input type="text" id="teacherName">
+                    </div>
 
-<p id="smartMessage">
+                </div>
 
-Добави графика си и UniFlo ще започне да анализира
-деня ти и свободното ти време.
+                <br>
 
-</p>
+                <button class="primary-btn" onclick="addSubject()">
+                    Запази предмет
+                </button>
 
-</div>
+            </div>
 
-</div>
+            <div class="subject-grid" id="subjectGrid"></div>
 
+        </section>
 
-<div class="panel">
 
-<h2>📍 Местоположение</h2>
+        <!-- TASKS -->
 
-<div id="dashboardLocation"
-class="location-box">
+        <section id="tasks" class="section">
 
-Местоположението не е активно.
+            <div class="section-header">
+                <h2>✅ To-Do задачи</h2>
+                <button class="primary-btn" onclick="toggleForm('taskForm')">
+                    + Нова задача
+                </button>
+            </div>
 
-</div>
+            <div id="taskForm" class="form-card" style="display:none;">
 
-</div>
+                <div class="form-grid">
 
-</div>
+                    <div class="form-group">
+                        <label>Задача</label>
+                        <input type="text" id="taskName" placeholder="Напр. Подготви презентацията">
+                    </div>
 
+                    <div class="form-group">
+                        <label>Краен срок</label>
+                        <input type="date" id="taskDate">
+                    </div>
 
-<!-- =========================
-     CALENDAR
-========================= -->
+                </div>
 
-<div id="calendar" class="page hidden">
+                <br>
 
-<div class="page-title">
+                <button class="primary-btn" onclick="addTask()">
+                    Добави
+                </button>
 
-<h1>📅 Календар</h1>
+            </div>
 
-<p>
-Лекции, работа и лични ангажименти.
-</p>
+            <div class="card">
 
-</div>
+                <div id="taskList"></div>
 
+            </div>
 
-<div class="panel">
+        </section>
 
-<div class="calendar-top">
 
-<button class="secondary"
-onclick="changeMonth(-1)">
-←
-</button>
+        <!-- EXAMS -->
 
-<h2 id="monthTitle"></h2>
+        <section id="exams" class="section">
 
-<button class="secondary"
-onclick="changeMonth(1)">
-→
-</button>
+            <div class="section-header">
+                <h2>📝 Изпити и оценки</h2>
+                <button class="primary-btn" onclick="toggleForm('examForm')">
+                    + Добави изпит
+                </button>
+            </div>
 
-</div>
+            <div id="examForm" class="form-card" style="display:none;">
 
-<div class="calendar-grid"
-id="calendarGrid">
-</div>
+                <div class="form-grid">
 
-</div>
+                    <div class="form-group">
+                        <label>Предмет</label>
+                        <input type="text" id="examSubject">
+                    </div>
 
-</div>
+                    <div class="form-group">
+                        <label>Дата</label>
+                        <input type="date" id="examDate">
+                    </div>
 
+                    <div class="form-group">
+                        <label>Час</label>
+                        <input type="time" id="examTime">
+                    </div>
 
-<!-- =========================
-     UNIVERSITY
-========================= -->
+                    <div class="form-group">
+                        <label>Зала</label>
+                        <input type="text" id="examRoom">
+                    </div>
 
-<div id="schedule" class="page hidden">
+                </div>
 
-<div class="page-title">
+                <br>
 
-<h1>🎓 Университет</h1>
+                <button class="primary-btn" onclick="addExam()">
+                    Добави изпит
+                </button>
 
-<p>
-Добави лекции, упражнения и зали.
-</p>
+            </div>
 
-</div>
+            <div class="card">
 
+                <div class="table-wrap">
 
-<div class="panel">
+                    <table>
 
-<h2>
-Добави занятие
-</h2>
+                        <thead>
+                            <tr>
+                                <th>Предмет</th>
+                                <th>Дата</th>
+                                <th>Час</th>
+                                <th>Зала</th>
+                                <th></th>
+                            </tr>
+                        </thead>
 
-<label>
-Предмет
-</label>
+                        <tbody id="examTable"></tbody>
 
-<input
-id="subject"
-placeholder="Напр. Микроикономика">
+                    </table>
 
+                </div>
 
-<label>
-Ден
-</label>
+            </div>
 
-<select id="subjectDay">
+        </section>
 
-<option value="1">
-Понеделник
-</option>
 
-<option value="2">
-Вторник
-</option>
+        <!-- BUDGET -->
 
-<option value="3">
-Сряда
-</option>
+        <section id="budget" class="section">
 
-<option value="4">
-Четвъртък
-</option>
+            <div class="section-header">
+                <h2>💰 Моят бюджет</h2>
+                <button class="primary-btn" onclick="toggleForm('budgetForm')">
+                    + Добави движение
+                </button>
+            </div>
 
-<option value="5">
-Петък
-</option>
+            <div class="stats">
 
-<option value="6">
-Събота
-</option>
+                <div class="stat-card">
+                    <div class="stat-label">Приходи</div>
+                    <div class="stat-number income" id="incomeTotal">0 лв.</div>
+                </div>
 
-<option value="0">
-Неделя
-</option>
+                <div class="stat-card">
+                    <div class="stat-label">Разходи</div>
+                    <div class="stat-number expense" id="expenseTotal">0 лв.</div>
+                </div>
 
-</select>
+                <div class="stat-card">
+                    <div class="stat-label">Баланс</div>
+                    <div class="stat-number" id="budgetBalance">0 лв.</div>
+                </div>
 
+            </div>
 
-<label>
-Начален час
-</label>
 
-<input
-id="subjectStart"
-type="time">
+            <div id="budgetForm" class="form-card" style="display:none;">
 
+                <div class="form-grid">
 
-<label>
-Краен час
-</label>
+                    <div class="form-group">
+                        <label>Описание</label>
+                        <input type="text" id="budgetName" placeholder="Напр. Храна">
+                    </div>
 
-<input
-id="subjectEnd"
-type="time">
+                    <div class="form-group">
+                        <label>Сума</label>
+                        <input type="number" id="budgetAmount" step="0.01">
+                    </div>
 
+                    <div class="form-group">
+                        <label>Тип</label>
+                        <select id="budgetType">
+                            <option value="expense">Разход</option>
+                            <option value="income">Приход</option>
+                        </select>
+                    </div>
 
-<label>
-Стая
-</label>
+                </div>
 
-<input
-id="subjectRoom"
-placeholder="Напр. 301">
+                <br>
 
+                <button class="primary-btn" onclick="addBudget()">
+                    Добави
+                </button>
 
-<label>
-Преподавател
-</label>
+            </div>
 
-<input
-id="subjectTeacher"
-placeholder="Име на преподавателя">
 
+            <div class="card">
 
-<button class="primary"
-onclick="addSubject()">
+                <div class="table-wrap">
 
-Добави в графика
+                    <table>
 
-</button>
+                        <thead>
+                            <tr>
+                                <th>Описание</th>
+                                <th>Тип</th>
+                                <th>Сума</th>
+                                <th></th>
+                            </tr>
+                        </thead>
 
-</div>
+                        <tbody id="budgetTable"></tbody>
 
+                    </table>
 
-<div class="panel">
+                </div>
 
-<h2>
-Моят график
-</h2>
+            </div>
 
-<div id="subjectsList">
-</div>
+        </section>
 
-</div>
 
-</div>
+        <!-- DORM -->
 
+        <section id="dorm" class="section">
 
-<!-- =========================
-     WORK
-========================= -->
+            <div class="section-header">
+                <h2>🏠 Моето общежитие</h2>
+            </div>
 
-<div id="work" class="page hidden">
+            <div class="form-card">
 
-<div class="page-title">
+                <div class="form-grid">
 
-<h1>💼 Работа</h1>
+                    <div class="form-group">
+                        <label>Общежитие</label>
+                        <input type="text" id="dormBuilding" placeholder="Напр. Блок 5">
+                    </div>
 
-<p>
-Добави работните си смени.
-</p>
+                    <div class="form-group">
+                        <label>Стая</label>
+                        <input type="text" id="dormRoom" placeholder="Напр. 312">
+                    </div>
 
-</div>
+                    <div class="form-group">
+                        <label>Съквартирант</label>
+                        <input type="text" id="roommate" placeholder="Име">
+                    </div>
 
+                    <div class="form-group">
+                        <label>Телефон</label>
+                        <input type="text" id="dormPhone">
+                    </div>
 
-<div class="panel">
+                    <div class="form-group form-full">
+                        <label>Бележки</label>
+                        <textarea id="dormNotes" placeholder="Важна информация за общежитието..."></textarea>
+                    </div>
 
-<h2>
-Добави работна смяна
-</h2>
+                </div>
 
-<label>
-Ден
-</label>
+                <br>
 
-<select id="workDay">
+                <button class="primary-btn" onclick="saveDorm()">
+                    💾 Запази информацията
+                </button>
 
-<option value="1">Понеделник</option>
-<option value="2">Вторник</option>
-<option value="3">Сряда</option>
-<option value="4">Четвъртък</option>
-<option value="5">Петък</option>
-<option value="6">Събота</option>
-<option value="0">Неделя</option>
+            </div>
 
-</select>
+        </section>
 
 
-<label>
-От
-</label>
+        <!-- NOTES -->
 
-<input
-id="workStart"
-type="time">
+        <section id="notes" class="section">
 
+            <div class="section-header">
+                <h2>🗒️ Моите бележки</h2>
+                <button class="primary-btn" onclick="toggleForm('noteForm')">
+                    + Нова бележка
+                </button>
+            </div>
 
-<label>
-До
-</label>
+            <div id="noteForm" class="form-card" style="display:none;">
 
-<input
-id="workEnd"
-type="time">
+                <div class="form-grid">
 
+                    <div class="form-group">
+                        <label>Заглавие</label>
+                        <input type="text" id="noteTitle">
+                    </div>
 
-<label>
-Работно място
-</label>
+                    <div class="form-group form-full">
+                        <label>Бележка</label>
+                        <textarea id="noteText"></textarea>
+                    </div>
 
-<input
-id="workPlace"
-placeholder="Напр. Кафе X">
+                </div>
 
+                <br>
 
-<button class="primary"
-onclick="addWork()">
+                <button class="primary-btn" onclick="addNote()">
+                    Запази бележката
+                </button>
 
-Добави смяна
+            </div>
 
-</button>
+            <div class="notes-grid" id="notesGrid"></div>
 
-</div>
+        </section>
 
-
-<div class="panel">
-
-<h2>
-Моят работен график
-</h2>
-
-<div id="workList">
-</div>
-
-</div>
-
-</div>
-
-
-<!-- =========================
-     NOTES
-========================= -->
-
-<div id="notes" class="page hidden">
-
-<div class="page-title">
-
-<h1>📝 Бележки</h1>
-
-<p>
-Всичко, което мозъкът ти отказва да запомни сам.
-</p>
-
-</div>
-
-
-<div class="panel">
-
-<label>
-Заглавие
-</label>
-
-<input
-id="noteTitle"
-placeholder="Напр. Важно за изпита">
-
-
-<label>
-Бележка
-</label>
-
-<textarea
-id="noteText"
-rows="5"
-placeholder="Напиши нещо...">
-</textarea>
-
-
-<button class="primary"
-onclick="addNote()">
-
-Запази бележката
-
-</button>
-
-</div>
-
-
-<div class="notes-grid"
-id="notesList">
-</div>
-
-</div>
-
-
-<!-- =========================
-     SMART ANALYSIS
-========================= -->
-
-<div id="analysis" class="page hidden">
-
-<div class="page-title">
-
-<h1>
-🧠 UniFlo Smart
-</h1>
-
-<p>
-Анализ на университет, работа, свободно време и местоположение.
-</p>
-
-</div>
-
-
-<div class="smart-box">
-
-<h2>
-Твоят персонален анализ
-</h2>
-
-<p id="analysisText">
-
-Добави графика си, за да започне анализът.
-
-</p>
-
-</div>
-
-
-<div class="panel">
-
-<h2>
-📍 Локация
-</h2>
-
-<div id="analysisLocation"
-class="location-box">
-
-Няма активна локация.
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- =========================
-     PROFILE
-========================= -->
-
-<div id="profile" class="page hidden">
-
-<div class="page-title">
-
-<h1>
-⚙️ Профил
-</h1>
-
-<p>
-Твоите персонални настройки.
-</p>
-
-</div>
-
-
-<div class="panel">
-
-<h2>
-Моята информация
-</h2>
-
-<p>
-<strong>Име:</strong>
-<span id="profileName"></span>
-</p>
-
-<p style="margin-top:10px;">
-<strong>Университет:</strong>
-<span id="profileUniversity"></span>
-</p>
-
-<p style="margin-top:10px;">
-<strong>Град:</strong>
-<span id="profileCity"></span>
-</p>
-
-<p style="margin-top:10px;">
-<strong>Специалност:</strong>
-<span id="profileSpecialty"></span>
-</p>
-
-<p style="margin-top:10px;">
-<strong>Курс:</strong>
-<span id="profileYear"></span>
-</p>
-
-<p style="margin-top:10px;">
-<strong>Група:</strong>
-<span id="profileGroup"></span>
-</p>
-
-<p style="margin-top:10px;">
-<strong>Работи:</strong>
-<span id="profileWork"></span>
-</p>
-
-</div>
-
-</div>
-
+    </div>
 
 </main>
+
 </div>
-
-
-<!-- MOBILE NAV -->
-
-<nav class="mobile-nav">
-
-<button onclick="showPage('dashboard')">
-🏠
-<span>Начало</span>
-</button>
-
-<button onclick="showPage('calendar')">
-📅
-<span>Календар</span>
-</button>
-
-<button onclick="showPage('schedule')">
-🎓
-<span>Уни</span>
-</button>
-
-<button onclick="showPage('work')">
-💼
-<span>Работа</span>
-</button>
-
-<button onclick="showPage('profile')">
-👤
-<span>Профил</span>
-</button>
-
-</nav>
-
-</section>
 
 
 <script>
 
-/* =========================
-   DATA
-========================= */
+/* DATA */
 
-let user =
-JSON.parse(localStorage.getItem("unifloUser")) || null;
+let tasks = JSON.parse(localStorage.getItem("uniflo_tasks")) || [];
 
-let subjects =
-JSON.parse(localStorage.getItem("unifloSubjects")) || [];
+let exams = JSON.parse(localStorage.getItem("uniflo_exams")) || [];
 
-let work =
-JSON.parse(localStorage.getItem("unifloWork")) || [];
+let subjects = JSON.parse(localStorage.getItem("uniflo_subjects")) || [];
 
-let notes =
-JSON.parse(localStorage.getItem("unifloNotes")) || [];
+let schedules = JSON.parse(localStorage.getItem("uniflo_schedule")) || [];
 
-let currentLocation =
-JSON.parse(localStorage.getItem("unifloLocation")) || null;
+let budgets = JSON.parse(localStorage.getItem("uniflo_budget")) || [];
 
-let currentDate = new Date();
+let notes = JSON.parse(localStorage.getItem("uniflo_notes")) || [];
 
 
-/* =========================
-   AUTH
-========================= */
+/* NAVIGATION */
 
-function showRegister() {
+function showSection(id, button) {
 
-document
-.getElementById("loginForm")
-.classList.add("hidden");
+    document.querySelectorAll(".section").forEach(section => {
+        section.classList.remove("active");
+    });
 
-document
-.getElementById("registerForm")
-.classList.remove("hidden");
+    document.getElementById(id).classList.add("active");
 
+    document.querySelectorAll(".nav-item").forEach(item => {
+        item.classList.remove("active");
+    });
+
+    if (button) {
+        button.classList.add("active");
+    }
+
+    const titles = {
+        dashboard: "Начало",
+        schedule: "График",
+        subjects: "Предмети",
+        tasks: "Задачи",
+        exams: "Изпити",
+        budget: "Бюджет",
+        dorm: "Общежитие",
+        notes: "Бележки"
+    };
+
+    document.getElementById("pageTitle").textContent = titles[id];
+
+    renderAll();
 }
 
 
-function showLogin() {
+function showSectionByName(id) {
 
-document
-.getElementById("registerForm")
-.classList.add("hidden");
+    const button = [...document.querySelectorAll(".nav-item")]
+        .find(btn => btn.getAttribute("onclick")?.includes("'" + id + "'"));
 
-document
-.getElementById("loginForm")
-.classList.remove("hidden");
-
+    showSection(id, button);
 }
 
 
-function register() {
+/* FORMS */
 
-const name =
-document.getElementById("regName").value.trim();
+function toggleForm(id) {
 
-const email =
-document.getElementById("regEmail").value.trim();
+    const form = document.getElementById(id);
 
-const password =
-document.getElementById("regPassword").value;
-
-const year =
-document.getElementById("regYear").value;
-
-const university =
-document.getElementById("regUniversity").value.trim();
-
-const city =
-document.getElementById("regCity").value.trim();
-
-const specialty =
-document.getElementById("regSpecialty").value.trim();
-
-const group =
-document.getElementById("regGroup").value.trim();
-
-const workStatus =
-document.getElementById("regWork").value;
-
-const courseStatus =
-document.getElementById("regCourseStatus").value;
-
-
-if (
-!name ||
-!email ||
-!password ||
-!university ||
-!city ||
-!specialty
-) {
-
-alert(
-"Моля, попълни всички задължителни полета."
-);
-
-return;
-
+    form.style.display =
+        form.style.display === "none" ? "block" : "none";
 }
 
 
-user = {
+/* TASKS */
 
-name,
-email,
-password,
-year,
-university,
-city,
-specialty,
-group,
-workStatus,
-courseStatus
+function addTask() {
 
-};
+    const name = document.getElementById("taskName").value.trim();
+    const date = document.getElementById("taskDate").value;
 
+    if (!name) {
+        alert("Напиши каква е задачата.");
+        return;
+    }
 
-localStorage.setItem(
-"unifloUser",
-JSON.stringify(user)
-);
+    tasks.push({
+        id: Date.now(),
+        name,
+        date,
+        done: false
+    });
 
+    saveData();
 
-alert(
-"Акаунтът е създаден! Добре дошъл в UniFlo 🎓"
-);
+    document.getElementById("taskName").value = "";
+    document.getElementById("taskDate").value = "";
 
-
-openApp();
-
+    renderTasks();
+    updateStats();
 }
 
 
-/* =========================
-   LOGIN
-========================= */
+function toggleTask(id) {
 
-function login() {
+    const task = tasks.find(t => t.id === id);
 
-const email =
-document.getElementById("loginEmail").value;
+    if (task) {
+        task.done = !task.done;
+    }
 
-const password =
-document.getElementById("loginPassword").value;
-
-
-if (!user) {
-
-alert(
-"Няма намерен акаунт. Първо се регистрирай."
-);
-
-return;
-
+    saveData();
+    renderTasks();
+    updateStats();
 }
 
 
-if (
-email !== user.email ||
-password !== user.password
-) {
+function deleteTask(id) {
 
-alert(
-"Грешен имейл или парола."
-);
+    tasks = tasks.filter(t => t.id !== id);
 
-return;
-
+    saveData();
+    renderTasks();
+    updateStats();
 }
 
 
-openApp();
+function renderTasks() {
 
+    const list = document.getElementById("taskList");
+
+    if (!tasks.length) {
+        list.innerHTML = '<div class="empty">🎉 Нямаш задачи. Човечеството оцеля още един ден.</div>';
+    } else {
+
+        list.innerHTML = tasks.map(task => `
+            <div class="task ${task.done ? "done" : ""}">
+                <input
+                    type="checkbox"
+                    ${task.done ? "checked" : ""}
+                    onchange="toggleTask(${task.id})"
+                >
+
+                <span style="flex:1;">
+                    ${escapeHtml(task.name)}
+                    ${task.date ? `<small style="color:#888;"> • ${task.date}</small>` : ""}
+                </span>
+
+                <button class="danger-btn" onclick="deleteTask(${task.id})">
+                    🗑️
+                </button>
+            </div>
+        `).join("");
+    }
+
+    const dashboard = document.getElementById("dashboardTasks");
+
+    const activeTasks = tasks.filter(t => !t.done).slice(0, 5);
+
+    if (!activeTasks.length) {
+        dashboard.innerHTML = '<div class="empty">Няма активни задачи 🎉</div>';
+    } else {
+
+        dashboard.innerHTML = activeTasks.map(task => `
+            <div class="task">
+                <input
+                    type="checkbox"
+                    onchange="toggleTask(${task.id})"
+                >
+                <span>${escapeHtml(task.name)}</span>
+            </div>
+        `).join("");
+    }
 }
 
 
-function logout() {
-
-document
-.getElementById("app")
-.classList.add("hidden");
-
-document
-.getElementById("authScreen")
-.classList.remove("hidden");
-
-}
-
-
-/* =========================
-   LOCATION
-========================= */
-
-function requestLocation() {
-
-if (!navigator.geolocation) {
-
-updateLocationStatus(
-"Този браузър не поддържа местоположение.",
-false
-);
-
-return;
-
-}
-
-
-updateLocationStatus(
-"Изчаквам разрешение за местоположение...",
-false
-);
-
-
-navigator.geolocation.getCurrentPosition(
-
-function(position) {
-
-const latitude =
-position.coords.latitude;
-
-const longitude =
-position.coords.longitude;
-
-const accuracy =
-Math.round(position.coords.accuracy);
-
-
-currentLocation = {
-
-latitude,
-longitude,
-accuracy,
-updatedAt: new Date().toISOString()
-
-};
-
-
-localStorage.setItem(
-"unifloLocation",
-JSON.stringify(currentLocation)
-);
-
-
-updateLocationStatus(
-"Местоположението е разрешено 📍",
-true
-);
-
-
-updateLocationDisplays();
-
-analyzeSchedule();
-
-},
-
-function(error) {
-
-let message =
-"Местоположението не беше разрешено.";
-
-if (error.code === 1) {
-
-message =
-"Отказан достъп до местоположението.";
-
-}
-
-if (error.code === 2) {
-
-message =
-"Местоположението не може да бъде определено.";
-
-}
-
-if (error.code === 3) {
-
-message =
-"Изтече времето за определяне на местоположението.";
-
-}
-
-
-updateLocationStatus(
-message,
-false
-);
-
-},
-
-{
-enableHighAccuracy: true,
-timeout: 10000,
-maximumAge: 300000
-}
-
-);
-
-}
-
-
-function updateLocationStatus(message, success) {
-
-const element =
-document.getElementById("locationStatus");
-
-if (!element) return;
-
-element.textContent = message;
-
-element.className =
-"location-status " +
-(success ? "success" : "warning");
-
-}
-
-
-function updateLocationDisplays() {
-
-const text =
-currentLocation
-?
-`📍 Локацията е активна. Точност приблизително ${currentLocation.accuracy} м.`
-:
-"📍 Няма активна локация.";
-
-
-const dashboard =
-document.getElementById("dashboardLocation");
-
-const analysis =
-document.getElementById("analysisLocation");
-
-
-if (dashboard)
-dashboard.textContent = text;
-
-if (analysis)
-analysis.textContent = text;
-
-}
-
-
-/* =========================
-   OPEN APP
-========================= */
-
-function openApp() {
-
-document
-.getElementById("authScreen")
-.classList.add("hidden");
-
-document
-.getElementById("app")
-.classList.remove("hidden");
-
-
-document.getElementById("headerName")
-.textContent = user.name;
-
-
-document.getElementById("welcomeName")
-.textContent = user.name;
-
-
-document.getElementById("avatar")
-.textContent =
-user.name.charAt(0).toUpperCase();
-
-
-document.getElementById("studentInfo")
-.textContent =
-`${user.university} · ${user.city} · ${user.specialty}`;
-
-
-document.getElementById("courseCard")
-.textContent =
-user.year + " курс";
-
-
-document.getElementById("profileName")
-.textContent = user.name;
-
-
-document.getElementById("profileUniversity")
-.textContent = user.university;
-
-
-document.getElementById("profileCity")
-.textContent = user.city;
-
-
-document.getElementById("profileSpecialty")
-.textContent = user.specialty;
-
-
-document.getElementById("profileYear")
-.textContent =
-user.year + " курс";
-
-
-document.getElementById("profileGroup")
-.textContent =
-user.group || "Не е посочена";
-
-
-document.getElementById("profileWork")
-.textContent =
-user.workStatus === "yes"
-?
-"Да 💼"
-:
-"Не";
-
-
-updateNotesCount();
-
-renderSubjects();
-
-renderWork();
-
-renderNotes();
-
-renderCalendar();
-
-updateLocationDisplays();
-
-analyzeSchedule();
-
-}
-
-
-/* =========================
-   NAVIGATION
-========================= */
-
-function showPage(page, button) {
-
-document
-.querySelectorAll(".page")
-.forEach(p =>
-p.classList.add("hidden")
-);
-
-
-const target =
-document.getElementById(page);
-
-if (target)
-target.classList.remove("hidden");
-
-
-document
-.querySelectorAll(".nav-btn")
-.forEach(btn =>
-btn.classList.remove("active")
-);
-
-
-if (button)
-button.classList.add("active");
-
-
-if (page === "calendar")
-renderCalendar();
-
-
-if (page === "analysis")
-analyzeSchedule();
-
-}
-
-
-/* =========================
-   SUBJECTS
-========================= */
+/* SUBJECTS */
 
 function addSubject() {
 
-const subject =
-document.getElementById("subject").value.trim();
+    const name = document.getElementById("subjectName").value.trim();
+    const teacher = document.getElementById("teacherName").value.trim();
 
-const day =
-document.getElementById("subjectDay").value;
+    if (!name) {
+        alert("Добави име на предмета.");
+        return;
+    }
 
-const start =
-document.getElementById("subjectStart").value;
+    subjects.push({
+        id: Date.now(),
+        name,
+        teacher
+    });
 
-const end =
-document.getElementById("subjectEnd").value;
+    saveData();
 
-const room =
-document.getElementById("subjectRoom").value.trim();
+    document.getElementById("subjectName").value = "";
+    document.getElementById("teacherName").value = "";
 
-const teacher =
-document.getElementById("subjectTeacher").value.trim();
-
-
-if (!subject || !start || !end) {
-
-alert(
-"Попълни предмета и часовете."
-);
-
-return;
-
+    renderSubjects();
+    updateStats();
 }
 
 
-subjects.push({
+function deleteSubject(id) {
 
-subject,
-day,
-start,
-end,
-room,
-teacher
+    subjects = subjects.filter(s => s.id !== id);
 
-});
-
-
-localStorage.setItem(
-"unifloSubjects",
-JSON.stringify(subjects)
-);
-
-
-document.getElementById("subject").value = "";
-
-document.getElementById("subjectStart").value = "";
-
-document.getElementById("subjectEnd").value = "";
-
-document.getElementById("subjectRoom").value = "";
-
-document.getElementById("subjectTeacher").value = "";
-
-
-renderSubjects();
-
-renderCalendar();
-
-analyzeSchedule();
-
+    saveData();
+    renderSubjects();
+    updateStats();
 }
 
 
 function renderSubjects() {
 
-const list =
-document.getElementById("subjectsList");
+    const grid = document.getElementById("subjectGrid");
 
-if (!list)
-return;
+    if (!subjects.length) {
 
+        grid.innerHTML = `
+            <div class="card empty" style="grid-column:1/-1;">
+                📚 Все още няма добавени предмети.
+            </div>
+        `;
 
-const days = [
-"Неделя",
-"Понеделник",
-"Вторник",
-"Сряда",
-"Четвъртък",
-"Петък",
-"Събота"
-];
+        return;
+    }
 
+    grid.innerHTML = subjects.map(subject => `
 
-if (subjects.length === 0) {
+        <div class="subject-card">
 
-list.innerHTML =
-"<p style='color:#777'>Все още няма добавени занятия.</p>";
+            <div class="subject-icon">📖</div>
 
-return;
+            <h3>${escapeHtml(subject.name)}</h3>
 
+            <p>
+                ${subject.teacher
+                    ? "Преподавател: " + escapeHtml(subject.teacher)
+                    : "Няма добавен преподавател"}
+            </p>
+
+            <br>
+
+            <button class="danger-btn"
+                onclick="deleteSubject(${subject.id})">
+                Изтрий
+            </button>
+
+        </div>
+
+    `).join("");
 }
 
 
-list.innerHTML =
-subjects.map((s, i) => `
+/* EXAMS */
 
-<div class="today-item">
+function addExam() {
 
-<strong>
-🎓 ${s.subject}
-</strong>
+    const subject = document.getElementById("examSubject").value.trim();
+    const date = document.getElementById("examDate").value;
+    const time = document.getElementById("examTime").value;
+    const room = document.getElementById("examRoom").value.trim();
 
-<span>
+    if (!subject || !date) {
+        alert("Добави поне предмет и дата.");
+        return;
+    }
 
-${days[s.day]}
-· ${s.start} – ${s.end}
+    exams.push({
+        id: Date.now(),
+        subject,
+        date,
+        time,
+        room
+    });
 
-${s.room ? " · Зала " + s.room : ""}
+    saveData();
 
-${s.teacher ? " · " + s.teacher : ""}
+    document.getElementById("examSubject").value = "";
+    document.getElementById("examDate").value = "";
+    document.getElementById("examTime").value = "";
+    document.getElementById("examRoom").value = "";
 
-</span>
-
-<br>
-
-<button
-class="secondary"
-onclick="deleteSubject(${i})">
-
-Изтрий
-
-</button>
-
-</div>
-
-`).join("");
-
+    renderExams();
+    updateStats();
 }
 
 
-function deleteSubject(index) {
+function deleteExam(id) {
 
-subjects.splice(index, 1);
+    exams = exams.filter(e => e.id !== id);
 
-localStorage.setItem(
-"unifloSubjects",
-JSON.stringify(subjects)
-);
-
-renderSubjects();
-
-renderCalendar();
-
-analyzeSchedule();
-
+    saveData();
+    renderExams();
+    updateStats();
 }
 
 
-/* =========================
-   WORK
-========================= */
+function renderExams() {
 
-function addWork() {
+    const table = document.getElementById("examTable");
 
-const day =
-document.getElementById("workDay").value;
+    if (!exams.length) {
 
-const start =
-document.getElementById("workStart").value;
+        table.innerHTML = `
+            <tr>
+                <td colspan="5" class="empty">
+                    Няма добавени изпити.
+                </td>
+            </tr>
+        `;
 
-const end =
-document.getElementById("workEnd").value;
+        return;
+    }
 
-const place =
-document.getElementById("workPlace").value.trim();
+    table.innerHTML = exams.map(exam => `
 
+        <tr>
 
-if (!start || !end) {
+            <td>${escapeHtml(exam.subject)}</td>
 
-alert(
-"Попълни часовете."
-);
+            <td>${exam.date}</td>
 
-return;
+            <td>${exam.time || "-"}</td>
 
+            <td>${escapeHtml(exam.room || "-")}</td>
+
+            <td>
+                <button
+                    class="danger-btn"
+                    onclick="deleteExam(${exam.id})">
+                    🗑️
+                </button>
+            </td>
+
+        </tr>
+
+    `).join("");
 }
 
 
-work.push({
+/* SCHEDULE */
 
-day,
-start,
-end,
-place
+function addSchedule() {
 
-});
+    const day = document.getElementById("scheduleDay").value;
+    const time = document.getElementById("scheduleTime").value;
+    const subject = document.getElementById("scheduleSubject").value.trim();
+    const room = document.getElementById("scheduleRoom").value.trim();
 
+    if (!time || !subject) {
+        alert("Добави час и предмет.");
+        return;
+    }
 
-localStorage.setItem(
-"unifloWork",
-JSON.stringify(work)
-);
+    schedules.push({
+        id: Date.now(),
+        day,
+        time,
+        subject,
+        room
+    });
 
+    saveData();
 
-document.getElementById("workStart").value = "";
+    document.getElementById("scheduleTime").value = "";
+    document.getElementById("scheduleSubject").value = "";
+    document.getElementById("scheduleRoom").value = "";
 
-document.getElementById("workEnd").value = "";
-
-document.getElementById("workPlace").value = "";
-
-
-renderWork();
-
-renderCalendar();
-
-analyzeSchedule();
-
+    renderSchedule();
 }
 
 
-function renderWork() {
+function deleteSchedule(id) {
 
-const list =
-document.getElementById("workList");
+    schedules = schedules.filter(s => s.id !== id);
 
-if (!list)
-return;
-
-
-const days = [
-"Неделя",
-"Понеделник",
-"Вторник",
-"Сряда",
-"Четвъртък",
-"Петък",
-"Събота"
-];
-
-
-if (work.length === 0) {
-
-list.innerHTML =
-"<p style='color:#777'>Няма добавени работни смени.</p>";
-
-return;
-
+    saveData();
+    renderSchedule();
 }
 
 
-list.innerHTML =
-work.map((w, i) => `
+function renderSchedule() {
 
-<div class="today-item">
+    const days = [
+        "Понеделник",
+        "Вторник",
+        "Сряда",
+        "Четвъртък",
+        "Петък",
+        "Събота",
+        "Неделя"
+    ];
 
-<strong>
-💼 ${days[w.day]}
-</strong>
+    const grid = document.getElementById("weekGrid");
 
-<span>
-${w.start} – ${w.end}
-${w.place ? " · " + w.place : ""}
-</span>
+    grid.innerHTML = days.map(day => {
 
-<br>
+        const events = schedules
+            .filter(s => s.day === day)
+            .sort((a,b) => a.time.localeCompare(b.time));
 
-<button
-class="secondary"
-onclick="deleteWork(${i})">
+        return `
 
-Изтрий
+            <div class="day-column">
 
-</button>
+                <div class="day-name">${day}</div>
 
-</div>
+                ${
+                    events.length
+                    ?
+                    events.map(event => `
 
-`).join("");
+                        <div class="day-event">
 
+                            <strong>${event.time}</strong><br>
+
+                            ${escapeHtml(event.subject)}
+
+                            ${
+                                event.room
+                                ? `<br><small>📍 ${escapeHtml(event.room)}</small>`
+                                : ""
+                            }
+
+                            <br><br>
+
+                            <button
+                                class="danger-btn"
+                                onclick="deleteSchedule(${event.id})">
+                                Изтрий
+                            </button>
+
+                        </div>
+
+                    `).join("")
+                    :
+                    `<div style="color:#aaa;text-align:center;font-size:12px;">
+                        Свободно
+                    </div>`
+                }
+
+            </div>
+
+        `;
+
+    }).join("");
+
+    renderTodaySchedule();
 }
 
 
-function deleteWork(index) {
+function renderTodaySchedule() {
 
-work.splice(index, 1);
+    const dayNames = [
+        "Неделя",
+        "Понеделник",
+        "Вторник",
+        "Сряда",
+        "Четвъртък",
+        "Петък",
+        "Събота"
+    ];
 
-localStorage.setItem(
-"unifloWork",
-JSON.stringify(work)
-);
+    const today = dayNames[new Date().getDay()];
 
-renderWork();
+    const todayEvents = schedules
+        .filter(s => s.day === today)
+        .sort((a,b) => a.time.localeCompare(b.time));
 
-renderCalendar();
+    const container = document.getElementById("todaySchedule");
 
-analyzeSchedule();
+    if (!todayEvents.length) {
 
+        container.innerHTML = `
+            <div class="empty">
+                Няма занятия за днес.
+            </div>
+        `;
+
+        return;
+    }
+
+    container.innerHTML = todayEvents.map(event => `
+
+        <div class="schedule-item">
+
+            <div class="time">
+                ${event.time}
+            </div>
+
+            <div class="schedule-color"></div>
+
+            <div class="schedule-info">
+
+                <strong>${escapeHtml(event.subject)}</strong>
+
+                <span>
+                    ${event.room ? "📍 " + escapeHtml(event.room) : ""}
+                </span>
+
+            </div>
+
+        </div>
+
+    `).join("");
 }
 
 
-/* =========================
-   NOTES
-========================= */
+/* BUDGET */
+
+function addBudget() {
+
+    const name = document.getElementById("budgetName").value.trim();
+    const amount = parseFloat(document.getElementById("budgetAmount").value);
+    const type = document.getElementById("budgetType").value;
+
+    if (!name || !amount || amount <= 0) {
+        alert("Добави описание и валидна сума.");
+        return;
+    }
+
+    budgets.push({
+        id: Date.now(),
+        name,
+        amount,
+        type
+    });
+
+    saveData();
+
+    document.getElementById("budgetName").value = "";
+    document.getElementById("budgetAmount").value = "";
+
+    renderBudget();
+    updateStats();
+}
+
+
+function deleteBudget(id) {
+
+    budgets = budgets.filter(b => b.id !== id);
+
+    saveData();
+    renderBudget();
+    updateStats();
+}
+
+
+function renderBudget() {
+
+    const table = document.getElementById("budgetTable");
+
+    let income = 0;
+    let expense = 0;
+
+    budgets.forEach(item => {
+
+        if (item.type === "income") {
+            income += item.amount;
+        } else {
+            expense += item.amount;
+        }
+
+    });
+
+    const balance = income - expense;
+
+    document.getElementById("incomeTotal").textContent =
+        income.toFixed(2) + " лв.";
+
+    document.getElementById("expenseTotal").textContent =
+        expense.toFixed(2) + " лв.";
+
+    document.getElementById("budgetBalance").textContent =
+        balance.toFixed(2) + " лв.";
+
+    if (!budgets.length) {
+
+        table.innerHTML = `
+            <tr>
+                <td colspan="4" class="empty">
+                    Няма добавени движения.
+                </td>
+            </tr>
+        `;
+
+        return;
+    }
+
+    table.innerHTML = budgets.map(item => `
+
+        <tr>
+
+            <td>${escapeHtml(item.name)}</td>
+
+            <td>
+                ${
+                    item.type === "income"
+                    ? '<span class="income">Приход</span>'
+                    : '<span class="expense">Разход</span>'
+                }
+            </td>
+
+            <td>
+                ${
+                    item.type === "income" ? "+" : "-"
+                }
+                ${item.amount.toFixed(2)} лв.
+            </td>
+
+            <td>
+                <button
+                    class="danger-btn"
+                    onclick="deleteBudget(${item.id})">
+                    🗑️
+                </button>
+            </td>
+
+        </tr>
+
+    `).join("");
+}
+
+
+/* NOTES */
 
 function addNote() {
 
-const title =
-document.getElementById("noteTitle").value.trim();
+    const title = document.getElementById("noteTitle").value.trim();
+    const text = document.getElementById("noteText").value.trim();
 
-const text =
-document.getElementById("noteText").value.trim();
+    if (!title || !text) {
+        alert("Добави заглавие и текст.");
+        return;
+    }
 
+    notes.push({
+        id: Date.now(),
+        title,
+        text
+    });
 
-if (!title || !text) {
+    saveData();
 
-alert(
-"Напиши заглавие и бележка."
-);
+    document.getElementById("noteTitle").value = "";
+    document.getElementById("noteText").value = "";
 
-return;
-
+    renderNotes();
 }
 
 
-notes.push({
+function deleteNote(id) {
 
-title,
-text,
-createdAt:
-new Date().toISOString()
+    notes = notes.filter(n => n.id !== id);
 
-});
-
-
-localStorage.setItem(
-"unifloNotes",
-JSON.stringify(notes)
-);
-
-
-document.getElementById("noteTitle").value = "";
-
-document.getElementById("noteText").value = "";
-
-
-renderNotes();
-
-updateNotesCount();
-
+    saveData();
+    renderNotes();
 }
 
 
 function renderNotes() {
 
-const list =
-document.getElementById("notesList");
+    const grid = document.getElementById("notesGrid");
 
-if (!list)
-return;
+    if (!notes.length) {
 
+        grid.innerHTML = `
+            <div class="card empty" style="grid-column:1/-1;">
+                🗒️ Все още няма бележки.
+            </div>
+        `;
 
-list.innerHTML =
-notes.map((n, i) => `
+        return;
+    }
 
-<div class="note">
+    grid.innerHTML = notes.map(note => `
 
-<h3>
-${escapeHtml(n.title)}
-</h3>
+        <div class="note">
 
-<p>
-${escapeHtml(n.text)}
-</p>
+            <h3>${escapeHtml(note.title)}</h3>
 
-<button
-class="secondary"
-onclick="deleteNote(${i})">
+            <p>${escapeHtml(note.text)}</p>
 
-Изтрий
+            <br>
 
-</button>
+            <button
+                class="danger-btn"
+                onclick="deleteNote(${note.id})">
+                Изтрий
+            </button>
 
-</div>
+        </div>
 
-`).join("");
-
+    `).join("");
 }
 
 
-function deleteNote(index) {
+/* DORM */
 
-notes.splice(index, 1);
+function saveDorm() {
 
-localStorage.setItem(
-"unifloNotes",
-JSON.stringify(notes)
-);
+    const dorm = {
+        building: document.getElementById("dormBuilding").value,
+        room: document.getElementById("dormRoom").value,
+        roommate: document.getElementById("roommate").value,
+        phone: document.getElementById("dormPhone").value,
+        notes: document.getElementById("dormNotes").value
+    };
 
-renderNotes();
+    localStorage.setItem("uniflo_dorm", JSON.stringify(dorm));
 
-updateNotesCount();
-
+    alert("Информацията е запазена 🏠");
 }
 
 
-function updateNotesCount() {
+function loadDorm() {
 
-const element =
-document.getElementById("notesCount");
+    const dorm = JSON.parse(localStorage.getItem("uniflo_dorm"));
 
-if (element)
-element.textContent = notes.length;
+    if (!dorm) return;
 
+    document.getElementById("dormBuilding").value = dorm.building || "";
+    document.getElementById("dormRoom").value = dorm.room || "";
+    document.getElementById("roommate").value = dorm.roommate || "";
+    document.getElementById("dormPhone").value = dorm.phone || "";
+    document.getElementById("dormNotes").value = dorm.notes || "";
 }
 
+
+/* DARK MODE */
+
+function toggleDarkMode() {
+
+    document.body.classList.toggle("dark");
+
+    localStorage.setItem(
+        "uniflo_dark",
+        document.body.classList.contains("dark")
+    );
+}
+
+
+function loadDarkMode() {
+
+    if (localStorage.getItem("uniflo_dark") === "true") {
+        document.body.classList.add("dark");
+    }
+}
+
+
+/* STATS */
+
+function updateStats() {
+
+    const activeTasks = tasks.filter(task => !task.done).length;
+
+    document.getElementById("taskCount").textContent =
+        activeTasks;
+
+    document.getElementById("examCount").textContent =
+        exams.length;
+
+    document.getElementById("subjectCount").textContent =
+        subjects.length;
+
+    let income = 0;
+    let expense = 0;
+
+    budgets.forEach(item => {
+
+        if (item.type === "income") {
+            income += item.amount;
+        } else {
+            expense += item.amount;
+        }
+
+    });
+
+    document.getElementById("balance").textContent =
+        (income - expense).toFixed(2) + " лв.";
+}
+
+
+/* SAVE */
+
+function saveData() {
+
+    localStorage.setItem(
+        "uniflo_tasks",
+        JSON.stringify(tasks)
+    );
+
+    localStorage.setItem(
+        "uniflo_exams",
+        JSON.stringify(exams)
+    );
+
+    localStorage.setItem(
+        "uniflo_subjects",
+        JSON.stringify(subjects)
+    );
+
+    localStorage.setItem(
+        "uniflo_schedule",
+        JSON.stringify(schedules)
+    );
+
+    localStorage.setItem(
+        "uniflo_budget",
+        JSON.stringify(budgets)
+    );
+
+    localStorage.setItem(
+        "uniflo_notes",
+        JSON.stringify(notes)
+    );
+}
+
+
+/* SECURITY / TEXT */
 
 function escapeHtml(text) {
 
-const div =
-document.createElement("div");
-
-div.textContent = text;
-
-return div.innerHTML;
-
+    return String(text)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
 }
 
 
-/* =========================
-   CALENDAR
-========================= */
+/* MOBILE MENU */
 
-function renderCalendar() {
+function toggleMobileMenu() {
 
-const grid =
-document.getElementById("calendarGrid");
+    const sidebar = document.querySelector(".sidebar");
 
-if (!grid)
-return;
-
-
-const year =
-currentDate.getFullYear();
-
-const month =
-currentDate.getMonth();
-
-
-const monthNames = [
-
-"Януари",
-"Февруари",
-"Март",
-"Април",
-"Май",
-"Юни",
-"Юли",
-"Август",
-"Септември",
-"Октомври",
-"Ноември",
-"Декември"
-
-];
-
-
-document.getElementById("monthTitle")
-.textContent =
-monthNames[month] + " " + year;
-
-
-const firstDay =
-new Date(year, month, 1).getDay();
-
-const daysInMonth =
-new Date(year, month + 1, 0).getDate();
-
-
-grid.innerHTML = "";
-
-
-const dayNames = [
-"Нд",
-"Пн",
-"Вт",
-"Ср",
-"Чт",
-"Пт",
-"Сб"
-];
-
-
-dayNames.forEach(day => {
-
-grid.innerHTML +=
-`<div class="day-name">${day}</div>`;
-
-});
-
-
-for (
-let i = 0;
-i < firstDay;
-i++
-) {
-
-grid.innerHTML +=
-"<div></div>";
-
+    if (sidebar.style.display === "block") {
+        sidebar.style.display = "none";
+    } else {
+        sidebar.style.display = "block";
+        sidebar.style.position = "fixed";
+        sidebar.style.zIndex = "200";
+    }
 }
 
 
-const today =
-new Date();
+/* RENDER ALL */
 
+function renderAll() {
 
-for (
-let day = 1;
-day <= daysInMonth;
-day++
-) {
-
-const date =
-new Date(year, month, day);
-
-const weekday =
-date.getDay();
-
-
-const isToday =
-date.toDateString() ===
-today.toDateString();
-
-
-let html = `
-
-<div class="day ${isToday ? "today" : ""}">
-
-<div class="day-number">
-${day}
-</div>
-
-`;
-
-
-subjects.forEach(s => {
-
-if (
-Number(s.day) === weekday
-) {
-
-html += `
-
-<div class="event">
-
-🎓 ${s.start}<br>
-
-${escapeHtml(s.subject)}
-
-${s.room
-?
-"<br>Зала " + escapeHtml(s.room)
-:
-""}
-
-</div>
-
-`;
-
-}
-
-});
-
-
-work.forEach(w => {
-
-if (
-Number(w.day) === weekday
-) {
-
-html += `
-
-<div class="event work-event">
-
-💼 ${w.start}<br>
-
-Работа
-
-</div>
-
-`;
-
-}
-
-});
-
-
-html += "</div>";
-
-grid.innerHTML += html;
-
+    renderTasks();
+    renderSubjects();
+    renderExams();
+    renderSchedule();
+    renderBudget();
+    renderNotes();
+    updateStats();
 }
 
 
-updateTodayCounters();
-
-}
-
-
-function updateTodayCounters() {
-
-const today =
-new Date();
-
-const weekday =
-today.getDay();
-
-
-const classCount =
-subjects.filter(
-s => Number(s.day) === weekday
-).length;
-
-
-const workCount =
-work.filter(
-w => Number(w.day) === weekday
-).length;
-
-
-const classesElement =
-document.getElementById("todayClasses");
-
-const workElement =
-document.getElementById("todayWork");
-
-
-if (classesElement)
-classesElement.textContent =
-classCount;
-
-
-if (workElement)
-workElement.textContent =
-workCount;
-
-}
-
-
-function changeMonth(direction) {
-
-currentDate.setMonth(
-currentDate.getMonth() + direction
-);
-
-renderCalendar();
-
-}
-
-
-/* =========================
-   SMART ANALYSIS
-========================= */
-
-function analyzeSchedule() {
-
-const smart =
-document.getElementById("smartMessage");
-
-const analysis =
-document.getElementById("analysisText");
-
-
-if (!smart && !analysis)
-return;
-
-
-let messages = [];
-
-
-if (subjects.length === 0 && work.length === 0) {
-
-messages.push(
-"Добави университетския и работния си график, за да мога да анализирам свободното ти време."
-);
-
-}
-
-
-if (subjects.length > 0) {
-
-messages.push(
-`Имаш ${subjects.length} добавени университетски занятия.`
-);
-
-}
-
-
-if (work.length > 0) {
-
-messages.push(
-`Имаш ${work.length} добавени работни смени.`
-);
-
-}
-
-
-const today =
-new Date();
-
-const weekday =
-today.getDay();
-
-
-const todayClasses =
-subjects.filter(
-s => Number(s.day) === weekday
-);
-
-
-const todayWork =
-work.filter(
-w => Number(w.day) === weekday
-);
-
-
-if (
-todayClasses.length > 0 &&
-todayWork.length > 0
-) {
-
-messages.push(
-"Днес имаш и университет, и работа. Остави си достатъчно време за придвижване и почивка."
-);
-
-}
-else if (
-todayClasses.length > 0
-) {
-
-messages.push(
-"Днес имаш университетски занятия. След тях имаш потенциално свободно време за учене или почивка."
-);
-
-}
-else if (
-todayWork.length > 0
-) {
-
-messages.push(
-"Днес имаш работа. Внимавай да не претовариш графика си с допълнителни задачи."
-);
-
-}
-else {
-
-messages.push(
-"Днес графикът ти изглежда сравнително свободен."
-);
-
-}
-
-
-if (currentLocation) {
-
-messages.push(
-`UniFlo има достъп до твоето текущо местоположение с приблизителна точност ${currentLocation.accuracy} метра.`
-);
-
-}
-
-
-const finalMessage =
-messages.join(" ");
-
-
-if (smart)
-smart.textContent =
-finalMessage;
-
-
-if (analysis)
-analysis.textContent =
-finalMessage;
-
-}
-
-
-/* =========================
-   START
-========================= */
-
-if (user) {
-
-openApp();
-
-}
-else {
-
-document
-.getElementById("authScreen")
-.classList.remove("hidden");
-
-}
+/* START */
+
+loadDarkMode();
+loadDorm();
+renderAll();
 
 </script>
 
