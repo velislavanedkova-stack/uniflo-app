@@ -1,0 +1,2663 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UniFlo 🎓</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --primary: #6366f1;
+    --primary-dark: #4f46e5;
+    --background: #f6f7fb;
+    --card: #ffffff;
+    --text: #202124;
+    --muted: #737373;
+    --border: #e7e7ef;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--background);
+    color: var(--text);
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* =========================
+   AUTH
+========================= */
+
+.auth {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background:
+        radial-gradient(circle at top left, #e0e7ff, transparent 35%),
+        radial-gradient(circle at bottom right, #fce7f3, transparent 35%),
+        var(--background);
+}
+
+.auth-box {
+    width: 100%;
+    max-width: 500px;
+    background: white;
+    padding: 40px;
+    border-radius: 28px;
+    box-shadow: 0 20px 70px rgba(0,0,0,.09);
+}
+
+.logo {
+    font-size: 34px;
+    font-weight: 900;
+    color: var(--primary);
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    color: var(--muted);
+    margin-bottom: 30px;
+    line-height: 1.5;
+}
+
+.auth-box h2 {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin: 15px 0 7px;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 13px 14px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    outline: none;
+    background: white;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--primary);
+}
+
+.primary {
+    width: 100%;
+    margin-top: 20px;
+    padding: 14px;
+    background: var(--primary);
+    color: white;
+    border-radius: 12px;
+    font-weight: 700;
+}
+
+.primary:hover {
+    background: var(--primary-dark);
+}
+
+.secondary {
+    padding: 11px 15px;
+    background: #f0f0f7;
+    color: #333;
+    border-radius: 10px;
+}
+
+.link-btn {
+    display: block;
+    margin: 18px auto 0;
+    background: none;
+    color: var(--primary);
+}
+
+/* =========================
+   APP
+========================= */
+
+.app {
+    min-height: 100vh;
+}
+
+header {
+    height: 70px;
+    background: white;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 28px;
+    position: sticky;
+    top: 0;
+    z-index: 20;
+}
+
+.header-logo {
+    font-size: 25px;
+    font-weight: 900;
+    color: var(--primary);
+}
+
+.user-area {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+}
+
+.layout {
+    display: flex;
+}
+
+.sidebar {
+    width: 235px;
+    min-height: calc(100vh - 70px);
+    background: white;
+    border-right: 1px solid var(--border);
+    padding: 22px 14px;
+}
+
+.nav-btn {
+    width: 100%;
+    padding: 13px 15px;
+    text-align: left;
+    background: transparent;
+    color: #555;
+    border-radius: 11px;
+    margin-bottom: 5px;
+}
+
+.nav-btn:hover,
+.nav-btn.active {
+    background: #eef2ff;
+    color: var(--primary-dark);
+    font-weight: 700;
+}
+
+.main {
+    flex: 1;
+    max-width: 1450px;
+    padding: 30px;
+}
+
+.page-title {
+    margin-bottom: 25px;
+}
+
+.page-title h1 {
+    font-size: 30px;
+    margin-bottom: 7px;
+}
+
+.page-title p {
+    color: var(--muted);
+}
+
+/* =========================
+   CARDS
+========================= */
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 17px;
+    margin-bottom: 25px;
+}
+
+.card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 21px;
+}
+
+.card small {
+    color: var(--muted);
+}
+
+.number {
+    font-size: 29px;
+    font-weight: 900;
+    color: var(--primary);
+    margin-top: 8px;
+}
+
+/* =========================
+   PANELS
+========================= */
+
+.grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+}
+
+.panel {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 22px;
+    margin-bottom: 20px;
+}
+
+.panel h2 {
+    margin-bottom: 18px;
+}
+
+.today-item {
+    padding: 15px;
+    background: #f8f8fc;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    border-left: 4px solid var(--primary);
+}
+
+.today-item strong {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.today-item span {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+/* =========================
+   CALENDAR
+========================= */
+
+.calendar-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 7px;
+}
+
+.day-name {
+    text-align: center;
+    color: var(--muted);
+    font-weight: 700;
+    padding: 10px;
+}
+
+.day {
+    min-height: 115px;
+    background: #fafafa;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 8px;
+}
+
+.day.today {
+    border: 2px solid var(--primary);
+}
+
+.day-number {
+    font-weight: 800;
+    margin-bottom: 7px;
+}
+
+.event {
+    font-size: 11px;
+    background: #e0e7ff;
+    color: #3730a3;
+    padding: 5px;
+    border-radius: 6px;
+    margin-bottom: 4px;
+}
+
+.work-event {
+    background: #dcfce7;
+    color: #166534;
+}
+
+/* =========================
+   NOTES
+========================= */
+
+.notes-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.note {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    padding: 18px;
+}
+
+.note h3 {
+    margin-bottom: 10px;
+}
+
+.note p {
+    color: #666;
+    white-space: pre-wrap;
+    line-height: 1.5;
+}
+
+.note button {
+    margin-top: 15px;
+}
+
+/* =========================
+   LOCATION
+========================= */
+
+.location-box {
+    background: #eef2ff;
+    padding: 16px;
+    border-radius: 13px;
+    margin-top: 15px;
+    color: #3730a3;
+}
+
+.location-status {
+    font-weight: 700;
+}
+
+.warning {
+    background: #fff7ed;
+    color: #9a3412;
+}
+
+.success {
+    background: #ecfdf5;
+    color: #065f46;
+}
+
+/* =========================
+   SMART ANALYSIS
+========================= */
+
+.smart-box {
+    background: linear-gradient(135deg, #eef2ff, #faf5ff);
+    border: 1px solid #ddd6fe;
+    border-radius: 18px;
+    padding: 22px;
+}
+
+.smart-box h2 {
+    margin-bottom: 10px;
+}
+
+.smart-box p {
+    line-height: 1.6;
+    color: #555;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 950px) {
+
+    .sidebar {
+        display: none;
+    }
+
+    .cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .notes-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+
+    header {
+        padding: 0 14px;
+    }
+
+    .header-logo {
+        font-size: 21px;
+    }
+
+    .user-area span {
+        display: none;
+    }
+
+    .main {
+        padding: 18px;
+        padding-bottom: 85px;
+    }
+
+    .cards {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    .card {
+        padding: 15px;
+    }
+
+    .number {
+        font-size: 24px;
+    }
+
+    .calendar-grid {
+        gap: 3px;
+    }
+
+    .day {
+        min-height: 80px;
+        padding: 4px;
+    }
+
+    .day-name {
+        padding: 6px 2px;
+        font-size: 11px;
+    }
+
+    .event {
+        font-size: 8px;
+        padding: 3px;
+    }
+
+    .notes-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .auth-box {
+        padding: 26px;
+    }
+}
+
+/* MOBILE NAV */
+
+.mobile-nav {
+    display: none;
+}
+
+@media (max-width: 950px) {
+
+    .mobile-nav {
+        display: flex;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 67px;
+        background: white;
+        border-top: 1px solid var(--border);
+        z-index: 50;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    .mobile-nav button {
+        background: none;
+        color: #666;
+        font-size: 11px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 3px;
+    }
+
+    .mobile-nav button.active {
+        color: var(--primary);
+        font-weight: 800;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     AUTHENTICATION
+========================= -->
+
+<section id="authScreen" class="auth">
+
+<div class="auth-box">
+
+<div class="logo">UniFlo 🎓</div>
+
+<p class="subtitle">
+Твоят университетски живот, организиран на едно място.
+</p>
+
+<!-- LOGIN -->
+
+<div id="loginForm">
+
+<h2>Добре дошъл отново 👋</h2>
+
+<label>Имейл</label>
+<input id="loginEmail" type="email" placeholder="example@email.com">
+
+<label>Парола</label>
+<input id="loginPassword" type="password" placeholder="••••••••">
+
+<button class="primary" onclick="login()">
+Вход
+</button>
+
+<button class="link-btn" onclick="showRegister()">
+Нямаш акаунт? Регистрирай се
+</button>
+
+</div>
+
+<!-- REGISTER -->
+
+<div id="registerForm" class="hidden">
+
+<h2>Създай своя UniFlo 🚀</h2>
+
+<label>Име</label>
+<input id="regName" placeholder="Твоето име">
+
+<label>Имейл</label>
+<input id="regEmail" type="email" placeholder="example@email.com">
+
+<label>Парола</label>
+<input id="regPassword" type="password" placeholder="••••••••">
+
+<label>Първи курс ли си?</label>
+
+<select id="regCourseStatus">
+<option value="first">Да, първи курс</option>
+<option value="higher">Не, по-горен курс</option>
+</select>
+
+<label>Курс</label>
+
+<select id="regYear">
+<option value="1">1 курс</option>
+<option value="2">2 курс</option>
+<option value="3">3 курс</option>
+<option value="4">4 курс</option>
+<option value="5">Магистратура</option>
+</select>
+
+<label>Университет</label>
+<input id="regUniversity" placeholder="Напр. ИУ – Варна">
+
+<label>Град</label>
+<input id="regCity" placeholder="Напр. Варна">
+
+<label>Специалност</label>
+<input id="regSpecialty" placeholder="Напр. Туризъм">
+
+<label>Група</label>
+<input id="regGroup" placeholder="Напр. 12">
+
+<label>Работиш ли?</label>
+
+<select id="regWork">
+<option value="no">Не</option>
+<option value="yes">Да</option>
+</select>
+
+<div class="location-box">
+
+<strong>📍 Местоположение</strong>
+
+<p style="margin-top:7px;line-height:1.5;">
+UniFlo може да използва текущото ти местоположение,
+за да анализира придвижването ти и да прави по-точни
+персонализирани предложения.
+</p>
+
+<button
+class="secondary"
+style="margin-top:10px;"
+onclick="requestLocation()">
+
+📍 Разрешавам местоположение
+
+</button>
+
+<div id="locationStatus"
+class="location-status"
+style="margin-top:10px;">
+
+Местоположението още не е разрешено.
+
+</div>
+
+</div>
+
+<button class="primary" onclick="register()">
+Създай акаунт
+</button>
+
+<button class="link-btn" onclick="showLogin()">
+Вече имам акаунт
+</button>
+
+</div>
+
+</div>
+</section>
+
+
+<!-- =========================
+     APPLICATION
+========================= -->
+
+<section id="app" class="app hidden">
+
+<header>
+
+<div class="header-logo">
+UniFlo 🎓
+</div>
+
+<div class="user-area">
+
+<span id="headerName"></span>
+
+<div class="avatar" id="avatar"></div>
+
+<button class="secondary" onclick="logout()">
+Изход
+</button>
+
+</div>
+
+</header>
+
+
+<div class="layout">
+
+<!-- SIDEBAR -->
+
+<aside class="sidebar">
+
+<button class="nav-btn active"
+onclick="showPage('dashboard', this)">
+🏠 Начало
+</button>
+
+<button class="nav-btn"
+onclick="showPage('calendar', this)">
+📅 Календар
+</button>
+
+<button class="nav-btn"
+onclick="showPage('schedule', this)">
+🎓 Университет
+</button>
+
+<button class="nav-btn"
+onclick="showPage('work', this)">
+💼 Работа
+</button>
+
+<button class="nav-btn"
+onclick="showPage('notes', this)">
+📝 Бележки
+</button>
+
+<button class="nav-btn"
+onclick="showPage('analysis', this)">
+🧠 Анализ
+</button>
+
+<button class="nav-btn"
+onclick="showPage('profile', this)">
+⚙️ Профил
+</button>
+
+</aside>
+
+
+<main class="main">
+
+
+<!-- =========================
+     DASHBOARD
+========================= -->
+
+<div id="dashboard" class="page">
+
+<div class="page-title">
+
+<h1>
+Здравей, <span id="welcomeName"></span> 👋
+</h1>
+
+<p id="studentInfo"></p>
+
+</div>
+
+
+<div class="cards">
+
+<div class="card">
+
+<small>Курс</small>
+
+<div class="number" id="courseCard">
+-
+</div>
+
+</div>
+
+
+<div class="card">
+
+<small>Занятия днес</small>
+
+<div class="number" id="todayClasses">
+0
+</div>
+
+</div>
+
+
+<div class="card">
+
+<small>Работа днес</small>
+
+<div class="number" id="todayWork">
+0
+</div>
+
+</div>
+
+
+<div class="card">
+
+<small>Бележки</small>
+
+<div class="number" id="notesCount">
+0
+</div>
+
+</div>
+
+</div>
+
+
+<div class="grid">
+
+<div class="panel">
+
+<h2>📅 Днешният ти график</h2>
+
+<div id="todaySchedule">
+
+<div class="today-item">
+
+<strong>
+09:00 – 10:30 · Икономика
+</strong>
+
+<span>
+Зала 201
+</span>
+
+</div>
+
+<div class="today-item">
+
+<strong>
+11:00 – 12:30 · Туризъм
+</strong>
+
+<span>
+Зала 305
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="smart-box">
+
+<h2>
+🧠 UniFlo Smart
+</h2>
+
+<p id="smartMessage">
+
+Добави графика си и UniFlo ще започне да анализира
+деня ти и свободното ти време.
+
+</p>
+
+</div>
+
+</div>
+
+
+<div class="panel">
+
+<h2>📍 Местоположение</h2>
+
+<div id="dashboardLocation"
+class="location-box">
+
+Местоположението не е активно.
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- =========================
+     CALENDAR
+========================= -->
+
+<div id="calendar" class="page hidden">
+
+<div class="page-title">
+
+<h1>📅 Календар</h1>
+
+<p>
+Лекции, работа и лични ангажименти.
+</p>
+
+</div>
+
+
+<div class="panel">
+
+<div class="calendar-top">
+
+<button class="secondary"
+onclick="changeMonth(-1)">
+←
+</button>
+
+<h2 id="monthTitle"></h2>
+
+<button class="secondary"
+onclick="changeMonth(1)">
+→
+</button>
+
+</div>
+
+<div class="calendar-grid"
+id="calendarGrid">
+</div>
+
+</div>
+
+</div>
+
+
+<!-- =========================
+     UNIVERSITY
+========================= -->
+
+<div id="schedule" class="page hidden">
+
+<div class="page-title">
+
+<h1>🎓 Университет</h1>
+
+<p>
+Добави лекции, упражнения и зали.
+</p>
+
+</div>
+
+
+<div class="panel">
+
+<h2>
+Добави занятие
+</h2>
+
+<label>
+Предмет
+</label>
+
+<input
+id="subject"
+placeholder="Напр. Микроикономика">
+
+
+<label>
+Ден
+</label>
+
+<select id="subjectDay">
+
+<option value="1">
+Понеделник
+</option>
+
+<option value="2">
+Вторник
+</option>
+
+<option value="3">
+Сряда
+</option>
+
+<option value="4">
+Четвъртък
+</option>
+
+<option value="5">
+Петък
+</option>
+
+<option value="6">
+Събота
+</option>
+
+<option value="0">
+Неделя
+</option>
+
+</select>
+
+
+<label>
+Начален час
+</label>
+
+<input
+id="subjectStart"
+type="time">
+
+
+<label>
+Краен час
+</label>
+
+<input
+id="subjectEnd"
+type="time">
+
+
+<label>
+Стая
+</label>
+
+<input
+id="subjectRoom"
+placeholder="Напр. 301">
+
+
+<label>
+Преподавател
+</label>
+
+<input
+id="subjectTeacher"
+placeholder="Име на преподавателя">
+
+
+<button class="primary"
+onclick="addSubject()">
+
+Добави в графика
+
+</button>
+
+</div>
+
+
+<div class="panel">
+
+<h2>
+Моят график
+</h2>
+
+<div id="subjectsList">
+</div>
+
+</div>
+
+</div>
+
+
+<!-- =========================
+     WORK
+========================= -->
+
+<div id="work" class="page hidden">
+
+<div class="page-title">
+
+<h1>💼 Работа</h1>
+
+<p>
+Добави работните си смени.
+</p>
+
+</div>
+
+
+<div class="panel">
+
+<h2>
+Добави работна смяна
+</h2>
+
+<label>
+Ден
+</label>
+
+<select id="workDay">
+
+<option value="1">Понеделник</option>
+<option value="2">Вторник</option>
+<option value="3">Сряда</option>
+<option value="4">Четвъртък</option>
+<option value="5">Петък</option>
+<option value="6">Събота</option>
+<option value="0">Неделя</option>
+
+</select>
+
+
+<label>
+От
+</label>
+
+<input
+id="workStart"
+type="time">
+
+
+<label>
+До
+</label>
+
+<input
+id="workEnd"
+type="time">
+
+
+<label>
+Работно място
+</label>
+
+<input
+id="workPlace"
+placeholder="Напр. Кафе X">
+
+
+<button class="primary"
+onclick="addWork()">
+
+Добави смяна
+
+</button>
+
+</div>
+
+
+<div class="panel">
+
+<h2>
+Моят работен график
+</h2>
+
+<div id="workList">
+</div>
+
+</div>
+
+</div>
+
+
+<!-- =========================
+     NOTES
+========================= -->
+
+<div id="notes" class="page hidden">
+
+<div class="page-title">
+
+<h1>📝 Бележки</h1>
+
+<p>
+Всичко, което мозъкът ти отказва да запомни сам.
+</p>
+
+</div>
+
+
+<div class="panel">
+
+<label>
+Заглавие
+</label>
+
+<input
+id="noteTitle"
+placeholder="Напр. Важно за изпита">
+
+
+<label>
+Бележка
+</label>
+
+<textarea
+id="noteText"
+rows="5"
+placeholder="Напиши нещо...">
+</textarea>
+
+
+<button class="primary"
+onclick="addNote()">
+
+Запази бележката
+
+</button>
+
+</div>
+
+
+<div class="notes-grid"
+id="notesList">
+</div>
+
+</div>
+
+
+<!-- =========================
+     SMART ANALYSIS
+========================= -->
+
+<div id="analysis" class="page hidden">
+
+<div class="page-title">
+
+<h1>
+🧠 UniFlo Smart
+</h1>
+
+<p>
+Анализ на университет, работа, свободно време и местоположение.
+</p>
+
+</div>
+
+
+<div class="smart-box">
+
+<h2>
+Твоят персонален анализ
+</h2>
+
+<p id="analysisText">
+
+Добави графика си, за да започне анализът.
+
+</p>
+
+</div>
+
+
+<div class="panel">
+
+<h2>
+📍 Локация
+</h2>
+
+<div id="analysisLocation"
+class="location-box">
+
+Няма активна локация.
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- =========================
+     PROFILE
+========================= -->
+
+<div id="profile" class="page hidden">
+
+<div class="page-title">
+
+<h1>
+⚙️ Профил
+</h1>
+
+<p>
+Твоите персонални настройки.
+</p>
+
+</div>
+
+
+<div class="panel">
+
+<h2>
+Моята информация
+</h2>
+
+<p>
+<strong>Име:</strong>
+<span id="profileName"></span>
+</p>
+
+<p style="margin-top:10px;">
+<strong>Университет:</strong>
+<span id="profileUniversity"></span>
+</p>
+
+<p style="margin-top:10px;">
+<strong>Град:</strong>
+<span id="profileCity"></span>
+</p>
+
+<p style="margin-top:10px;">
+<strong>Специалност:</strong>
+<span id="profileSpecialty"></span>
+</p>
+
+<p style="margin-top:10px;">
+<strong>Курс:</strong>
+<span id="profileYear"></span>
+</p>
+
+<p style="margin-top:10px;">
+<strong>Група:</strong>
+<span id="profileGroup"></span>
+</p>
+
+<p style="margin-top:10px;">
+<strong>Работи:</strong>
+<span id="profileWork"></span>
+</p>
+
+</div>
+
+</div>
+
+
+</main>
+</div>
+
+
+<!-- MOBILE NAV -->
+
+<nav class="mobile-nav">
+
+<button onclick="showPage('dashboard')">
+🏠
+<span>Начало</span>
+</button>
+
+<button onclick="showPage('calendar')">
+📅
+<span>Календар</span>
+</button>
+
+<button onclick="showPage('schedule')">
+🎓
+<span>Уни</span>
+</button>
+
+<button onclick="showPage('work')">
+💼
+<span>Работа</span>
+</button>
+
+<button onclick="showPage('profile')">
+👤
+<span>Профил</span>
+</button>
+
+</nav>
+
+</section>
+
+
+<script>
+
+/* =========================
+   DATA
+========================= */
+
+let user =
+JSON.parse(localStorage.getItem("unifloUser")) || null;
+
+let subjects =
+JSON.parse(localStorage.getItem("unifloSubjects")) || [];
+
+let work =
+JSON.parse(localStorage.getItem("unifloWork")) || [];
+
+let notes =
+JSON.parse(localStorage.getItem("unifloNotes")) || [];
+
+let currentLocation =
+JSON.parse(localStorage.getItem("unifloLocation")) || null;
+
+let currentDate = new Date();
+
+
+/* =========================
+   AUTH
+========================= */
+
+function showRegister() {
+
+document
+.getElementById("loginForm")
+.classList.add("hidden");
+
+document
+.getElementById("registerForm")
+.classList.remove("hidden");
+
+}
+
+
+function showLogin() {
+
+document
+.getElementById("registerForm")
+.classList.add("hidden");
+
+document
+.getElementById("loginForm")
+.classList.remove("hidden");
+
+}
+
+
+function register() {
+
+const name =
+document.getElementById("regName").value.trim();
+
+const email =
+document.getElementById("regEmail").value.trim();
+
+const password =
+document.getElementById("regPassword").value;
+
+const year =
+document.getElementById("regYear").value;
+
+const university =
+document.getElementById("regUniversity").value.trim();
+
+const city =
+document.getElementById("regCity").value.trim();
+
+const specialty =
+document.getElementById("regSpecialty").value.trim();
+
+const group =
+document.getElementById("regGroup").value.trim();
+
+const workStatus =
+document.getElementById("regWork").value;
+
+const courseStatus =
+document.getElementById("regCourseStatus").value;
+
+
+if (
+!name ||
+!email ||
+!password ||
+!university ||
+!city ||
+!specialty
+) {
+
+alert(
+"Моля, попълни всички задължителни полета."
+);
+
+return;
+
+}
+
+
+user = {
+
+name,
+email,
+password,
+year,
+university,
+city,
+specialty,
+group,
+workStatus,
+courseStatus
+
+};
+
+
+localStorage.setItem(
+"unifloUser",
+JSON.stringify(user)
+);
+
+
+alert(
+"Акаунтът е създаден! Добре дошъл в UniFlo 🎓"
+);
+
+
+openApp();
+
+}
+
+
+/* =========================
+   LOGIN
+========================= */
+
+function login() {
+
+const email =
+document.getElementById("loginEmail").value;
+
+const password =
+document.getElementById("loginPassword").value;
+
+
+if (!user) {
+
+alert(
+"Няма намерен акаунт. Първо се регистрирай."
+);
+
+return;
+
+}
+
+
+if (
+email !== user.email ||
+password !== user.password
+) {
+
+alert(
+"Грешен имейл или парола."
+);
+
+return;
+
+}
+
+
+openApp();
+
+}
+
+
+function logout() {
+
+document
+.getElementById("app")
+.classList.add("hidden");
+
+document
+.getElementById("authScreen")
+.classList.remove("hidden");
+
+}
+
+
+/* =========================
+   LOCATION
+========================= */
+
+function requestLocation() {
+
+if (!navigator.geolocation) {
+
+updateLocationStatus(
+"Този браузър не поддържа местоположение.",
+false
+);
+
+return;
+
+}
+
+
+updateLocationStatus(
+"Изчаквам разрешение за местоположение...",
+false
+);
+
+
+navigator.geolocation.getCurrentPosition(
+
+function(position) {
+
+const latitude =
+position.coords.latitude;
+
+const longitude =
+position.coords.longitude;
+
+const accuracy =
+Math.round(position.coords.accuracy);
+
+
+currentLocation = {
+
+latitude,
+longitude,
+accuracy,
+updatedAt: new Date().toISOString()
+
+};
+
+
+localStorage.setItem(
+"unifloLocation",
+JSON.stringify(currentLocation)
+);
+
+
+updateLocationStatus(
+"Местоположението е разрешено 📍",
+true
+);
+
+
+updateLocationDisplays();
+
+analyzeSchedule();
+
+},
+
+function(error) {
+
+let message =
+"Местоположението не беше разрешено.";
+
+if (error.code === 1) {
+
+message =
+"Отказан достъп до местоположението.";
+
+}
+
+if (error.code === 2) {
+
+message =
+"Местоположението не може да бъде определено.";
+
+}
+
+if (error.code === 3) {
+
+message =
+"Изтече времето за определяне на местоположението.";
+
+}
+
+
+updateLocationStatus(
+message,
+false
+);
+
+},
+
+{
+enableHighAccuracy: true,
+timeout: 10000,
+maximumAge: 300000
+}
+
+);
+
+}
+
+
+function updateLocationStatus(message, success) {
+
+const element =
+document.getElementById("locationStatus");
+
+if (!element) return;
+
+element.textContent = message;
+
+element.className =
+"location-status " +
+(success ? "success" : "warning");
+
+}
+
+
+function updateLocationDisplays() {
+
+const text =
+currentLocation
+?
+`📍 Локацията е активна. Точност приблизително ${currentLocation.accuracy} м.`
+:
+"📍 Няма активна локация.";
+
+
+const dashboard =
+document.getElementById("dashboardLocation");
+
+const analysis =
+document.getElementById("analysisLocation");
+
+
+if (dashboard)
+dashboard.textContent = text;
+
+if (analysis)
+analysis.textContent = text;
+
+}
+
+
+/* =========================
+   OPEN APP
+========================= */
+
+function openApp() {
+
+document
+.getElementById("authScreen")
+.classList.add("hidden");
+
+document
+.getElementById("app")
+.classList.remove("hidden");
+
+
+document.getElementById("headerName")
+.textContent = user.name;
+
+
+document.getElementById("welcomeName")
+.textContent = user.name;
+
+
+document.getElementById("avatar")
+.textContent =
+user.name.charAt(0).toUpperCase();
+
+
+document.getElementById("studentInfo")
+.textContent =
+`${user.university} · ${user.city} · ${user.specialty}`;
+
+
+document.getElementById("courseCard")
+.textContent =
+user.year + " курс";
+
+
+document.getElementById("profileName")
+.textContent = user.name;
+
+
+document.getElementById("profileUniversity")
+.textContent = user.university;
+
+
+document.getElementById("profileCity")
+.textContent = user.city;
+
+
+document.getElementById("profileSpecialty")
+.textContent = user.specialty;
+
+
+document.getElementById("profileYear")
+.textContent =
+user.year + " курс";
+
+
+document.getElementById("profileGroup")
+.textContent =
+user.group || "Не е посочена";
+
+
+document.getElementById("profileWork")
+.textContent =
+user.workStatus === "yes"
+?
+"Да 💼"
+:
+"Не";
+
+
+updateNotesCount();
+
+renderSubjects();
+
+renderWork();
+
+renderNotes();
+
+renderCalendar();
+
+updateLocationDisplays();
+
+analyzeSchedule();
+
+}
+
+
+/* =========================
+   NAVIGATION
+========================= */
+
+function showPage(page, button) {
+
+document
+.querySelectorAll(".page")
+.forEach(p =>
+p.classList.add("hidden")
+);
+
+
+const target =
+document.getElementById(page);
+
+if (target)
+target.classList.remove("hidden");
+
+
+document
+.querySelectorAll(".nav-btn")
+.forEach(btn =>
+btn.classList.remove("active")
+);
+
+
+if (button)
+button.classList.add("active");
+
+
+if (page === "calendar")
+renderCalendar();
+
+
+if (page === "analysis")
+analyzeSchedule();
+
+}
+
+
+/* =========================
+   SUBJECTS
+========================= */
+
+function addSubject() {
+
+const subject =
+document.getElementById("subject").value.trim();
+
+const day =
+document.getElementById("subjectDay").value;
+
+const start =
+document.getElementById("subjectStart").value;
+
+const end =
+document.getElementById("subjectEnd").value;
+
+const room =
+document.getElementById("subjectRoom").value.trim();
+
+const teacher =
+document.getElementById("subjectTeacher").value.trim();
+
+
+if (!subject || !start || !end) {
+
+alert(
+"Попълни предмета и часовете."
+);
+
+return;
+
+}
+
+
+subjects.push({
+
+subject,
+day,
+start,
+end,
+room,
+teacher
+
+});
+
+
+localStorage.setItem(
+"unifloSubjects",
+JSON.stringify(subjects)
+);
+
+
+document.getElementById("subject").value = "";
+
+document.getElementById("subjectStart").value = "";
+
+document.getElementById("subjectEnd").value = "";
+
+document.getElementById("subjectRoom").value = "";
+
+document.getElementById("subjectTeacher").value = "";
+
+
+renderSubjects();
+
+renderCalendar();
+
+analyzeSchedule();
+
+}
+
+
+function renderSubjects() {
+
+const list =
+document.getElementById("subjectsList");
+
+if (!list)
+return;
+
+
+const days = [
+"Неделя",
+"Понеделник",
+"Вторник",
+"Сряда",
+"Четвъртък",
+"Петък",
+"Събота"
+];
+
+
+if (subjects.length === 0) {
+
+list.innerHTML =
+"<p style='color:#777'>Все още няма добавени занятия.</p>";
+
+return;
+
+}
+
+
+list.innerHTML =
+subjects.map((s, i) => `
+
+<div class="today-item">
+
+<strong>
+🎓 ${s.subject}
+</strong>
+
+<span>
+
+${days[s.day]}
+· ${s.start} – ${s.end}
+
+${s.room ? " · Зала " + s.room : ""}
+
+${s.teacher ? " · " + s.teacher : ""}
+
+</span>
+
+<br>
+
+<button
+class="secondary"
+onclick="deleteSubject(${i})">
+
+Изтрий
+
+</button>
+
+</div>
+
+`).join("");
+
+}
+
+
+function deleteSubject(index) {
+
+subjects.splice(index, 1);
+
+localStorage.setItem(
+"unifloSubjects",
+JSON.stringify(subjects)
+);
+
+renderSubjects();
+
+renderCalendar();
+
+analyzeSchedule();
+
+}
+
+
+/* =========================
+   WORK
+========================= */
+
+function addWork() {
+
+const day =
+document.getElementById("workDay").value;
+
+const start =
+document.getElementById("workStart").value;
+
+const end =
+document.getElementById("workEnd").value;
+
+const place =
+document.getElementById("workPlace").value.trim();
+
+
+if (!start || !end) {
+
+alert(
+"Попълни часовете."
+);
+
+return;
+
+}
+
+
+work.push({
+
+day,
+start,
+end,
+place
+
+});
+
+
+localStorage.setItem(
+"unifloWork",
+JSON.stringify(work)
+);
+
+
+document.getElementById("workStart").value = "";
+
+document.getElementById("workEnd").value = "";
+
+document.getElementById("workPlace").value = "";
+
+
+renderWork();
+
+renderCalendar();
+
+analyzeSchedule();
+
+}
+
+
+function renderWork() {
+
+const list =
+document.getElementById("workList");
+
+if (!list)
+return;
+
+
+const days = [
+"Неделя",
+"Понеделник",
+"Вторник",
+"Сряда",
+"Четвъртък",
+"Петък",
+"Събота"
+];
+
+
+if (work.length === 0) {
+
+list.innerHTML =
+"<p style='color:#777'>Няма добавени работни смени.</p>";
+
+return;
+
+}
+
+
+list.innerHTML =
+work.map((w, i) => `
+
+<div class="today-item">
+
+<strong>
+💼 ${days[w.day]}
+</strong>
+
+<span>
+${w.start} – ${w.end}
+${w.place ? " · " + w.place : ""}
+</span>
+
+<br>
+
+<button
+class="secondary"
+onclick="deleteWork(${i})">
+
+Изтрий
+
+</button>
+
+</div>
+
+`).join("");
+
+}
+
+
+function deleteWork(index) {
+
+work.splice(index, 1);
+
+localStorage.setItem(
+"unifloWork",
+JSON.stringify(work)
+);
+
+renderWork();
+
+renderCalendar();
+
+analyzeSchedule();
+
+}
+
+
+/* =========================
+   NOTES
+========================= */
+
+function addNote() {
+
+const title =
+document.getElementById("noteTitle").value.trim();
+
+const text =
+document.getElementById("noteText").value.trim();
+
+
+if (!title || !text) {
+
+alert(
+"Напиши заглавие и бележка."
+);
+
+return;
+
+}
+
+
+notes.push({
+
+title,
+text,
+createdAt:
+new Date().toISOString()
+
+});
+
+
+localStorage.setItem(
+"unifloNotes",
+JSON.stringify(notes)
+);
+
+
+document.getElementById("noteTitle").value = "";
+
+document.getElementById("noteText").value = "";
+
+
+renderNotes();
+
+updateNotesCount();
+
+}
+
+
+function renderNotes() {
+
+const list =
+document.getElementById("notesList");
+
+if (!list)
+return;
+
+
+list.innerHTML =
+notes.map((n, i) => `
+
+<div class="note">
+
+<h3>
+${escapeHtml(n.title)}
+</h3>
+
+<p>
+${escapeHtml(n.text)}
+</p>
+
+<button
+class="secondary"
+onclick="deleteNote(${i})">
+
+Изтрий
+
+</button>
+
+</div>
+
+`).join("");
+
+}
+
+
+function deleteNote(index) {
+
+notes.splice(index, 1);
+
+localStorage.setItem(
+"unifloNotes",
+JSON.stringify(notes)
+);
+
+renderNotes();
+
+updateNotesCount();
+
+}
+
+
+function updateNotesCount() {
+
+const element =
+document.getElementById("notesCount");
+
+if (element)
+element.textContent = notes.length;
+
+}
+
+
+function escapeHtml(text) {
+
+const div =
+document.createElement("div");
+
+div.textContent = text;
+
+return div.innerHTML;
+
+}
+
+
+/* =========================
+   CALENDAR
+========================= */
+
+function renderCalendar() {
+
+const grid =
+document.getElementById("calendarGrid");
+
+if (!grid)
+return;
+
+
+const year =
+currentDate.getFullYear();
+
+const month =
+currentDate.getMonth();
+
+
+const monthNames = [
+
+"Януари",
+"Февруари",
+"Март",
+"Април",
+"Май",
+"Юни",
+"Юли",
+"Август",
+"Септември",
+"Октомври",
+"Ноември",
+"Декември"
+
+];
+
+
+document.getElementById("monthTitle")
+.textContent =
+monthNames[month] + " " + year;
+
+
+const firstDay =
+new Date(year, month, 1).getDay();
+
+const daysInMonth =
+new Date(year, month + 1, 0).getDate();
+
+
+grid.innerHTML = "";
+
+
+const dayNames = [
+"Нд",
+"Пн",
+"Вт",
+"Ср",
+"Чт",
+"Пт",
+"Сб"
+];
+
+
+dayNames.forEach(day => {
+
+grid.innerHTML +=
+`<div class="day-name">${day}</div>`;
+
+});
+
+
+for (
+let i = 0;
+i < firstDay;
+i++
+) {
+
+grid.innerHTML +=
+"<div></div>";
+
+}
+
+
+const today =
+new Date();
+
+
+for (
+let day = 1;
+day <= daysInMonth;
+day++
+) {
+
+const date =
+new Date(year, month, day);
+
+const weekday =
+date.getDay();
+
+
+const isToday =
+date.toDateString() ===
+today.toDateString();
+
+
+let html = `
+
+<div class="day ${isToday ? "today" : ""}">
+
+<div class="day-number">
+${day}
+</div>
+
+`;
+
+
+subjects.forEach(s => {
+
+if (
+Number(s.day) === weekday
+) {
+
+html += `
+
+<div class="event">
+
+🎓 ${s.start}<br>
+
+${escapeHtml(s.subject)}
+
+${s.room
+?
+"<br>Зала " + escapeHtml(s.room)
+:
+""}
+
+</div>
+
+`;
+
+}
+
+});
+
+
+work.forEach(w => {
+
+if (
+Number(w.day) === weekday
+) {
+
+html += `
+
+<div class="event work-event">
+
+💼 ${w.start}<br>
+
+Работа
+
+</div>
+
+`;
+
+}
+
+});
+
+
+html += "</div>";
+
+grid.innerHTML += html;
+
+}
+
+
+updateTodayCounters();
+
+}
+
+
+function updateTodayCounters() {
+
+const today =
+new Date();
+
+const weekday =
+today.getDay();
+
+
+const classCount =
+subjects.filter(
+s => Number(s.day) === weekday
+).length;
+
+
+const workCount =
+work.filter(
+w => Number(w.day) === weekday
+).length;
+
+
+const classesElement =
+document.getElementById("todayClasses");
+
+const workElement =
+document.getElementById("todayWork");
+
+
+if (classesElement)
+classesElement.textContent =
+classCount;
+
+
+if (workElement)
+workElement.textContent =
+workCount;
+
+}
+
+
+function changeMonth(direction) {
+
+currentDate.setMonth(
+currentDate.getMonth() + direction
+);
+
+renderCalendar();
+
+}
+
+
+/* =========================
+   SMART ANALYSIS
+========================= */
+
+function analyzeSchedule() {
+
+const smart =
+document.getElementById("smartMessage");
+
+const analysis =
+document.getElementById("analysisText");
+
+
+if (!smart && !analysis)
+return;
+
+
+let messages = [];
+
+
+if (subjects.length === 0 && work.length === 0) {
+
+messages.push(
+"Добави университетския и работния си график, за да мога да анализирам свободното ти време."
+);
+
+}
+
+
+if (subjects.length > 0) {
+
+messages.push(
+`Имаш ${subjects.length} добавени университетски занятия.`
+);
+
+}
+
+
+if (work.length > 0) {
+
+messages.push(
+`Имаш ${work.length} добавени работни смени.`
+);
+
+}
+
+
+const today =
+new Date();
+
+const weekday =
+today.getDay();
+
+
+const todayClasses =
+subjects.filter(
+s => Number(s.day) === weekday
+);
+
+
+const todayWork =
+work.filter(
+w => Number(w.day) === weekday
+);
+
+
+if (
+todayClasses.length > 0 &&
+todayWork.length > 0
+) {
+
+messages.push(
+"Днес имаш и университет, и работа. Остави си достатъчно време за придвижване и почивка."
+);
+
+}
+else if (
+todayClasses.length > 0
+) {
+
+messages.push(
+"Днес имаш университетски занятия. След тях имаш потенциално свободно време за учене или почивка."
+);
+
+}
+else if (
+todayWork.length > 0
+) {
+
+messages.push(
+"Днес имаш работа. Внимавай да не претовариш графика си с допълнителни задачи."
+);
+
+}
+else {
+
+messages.push(
+"Днес графикът ти изглежда сравнително свободен."
+);
+
+}
+
+
+if (currentLocation) {
+
+messages.push(
+`UniFlo има достъп до твоето текущо местоположение с приблизителна точност ${currentLocation.accuracy} метра.`
+);
+
+}
+
+
+const finalMessage =
+messages.join(" ");
+
+
+if (smart)
+smart.textContent =
+finalMessage;
+
+
+if (analysis)
+analysis.textContent =
+finalMessage;
+
+}
+
+
+/* =========================
+   START
+========================= */
+
+if (user) {
+
+openApp();
+
+}
+else {
+
+document
+.getElementById("authScreen")
+.classList.remove("hidden");
+
+}
+
+</script>
+
+</body>
+</html>
