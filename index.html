@@ -3,1674 +3,1484 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>UniFlo | Student Life</title>
 
-<style>
-:root{
---primary:#6c5ce7;
---primary2:#8b7cf6;
---bg:#f6f7fb;
---card:#fff;
---text:#202236;
---muted:#74788d;
---line:#e9eaf2;
---green:#35b779;
---orange:#ff9f43;
---red:#ff6b6b;
---shadow:0 10px 35px rgba(43,38,91,.08);
---radius:20px
-}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-*{box-sizing:border-box}
+<link rel="stylesheet"
+href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
 
 body{
-margin:0;
-font-family:Arial,Segoe UI,sans-serif;
-background:var(--bg);
-color:var(--text)
+    font-family:'Inter',sans-serif;
+    background:#f5f7fb;
+    color:#172033;
 }
 
-button,input,select,textarea{font:inherit}
-
-button{
-cursor:pointer;
-border:0
+button,input,select{
+    font-family:inherit;
 }
 
-.hidden{display:none!important}
-
-.auth{
-min-height:100vh;
-display:flex;
-align-items:center;
-justify-content:center;
-padding:20px;
-background:linear-gradient(135deg,#eeeaff,#f8f9ff)
+.hidden{
+    display:none!important;
 }
 
-.auth-card{
-width:min(440px,100%);
-background:white;
-border-radius:28px;
-padding:35px;
-box-shadow:0 25px 70px rgba(55,45,130,.14)
+/* LOGIN */
+
+#loginScreen{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:
+        radial-gradient(circle at top left,#dcd6ff,transparent 35%),
+        radial-gradient(circle at bottom right,#cceeff,transparent 35%),
+        #f6f7fb;
+    padding:20px;
+}
+
+.login-box{
+    width:420px;
+    max-width:100%;
+    background:white;
+    border-radius:28px;
+    padding:38px;
+    box-shadow:0 20px 60px rgba(30,40,80,.12);
 }
 
 .logo{
-font-size:30px;
-font-weight:900;
-color:var(--primary)
+    font-size:34px;
+    font-weight:800;
+    color:#6657d9;
+    margin-bottom:8px;
 }
 
-.logo span{color:#222}
-
-.auth-card h1{
-margin:22px 0 8px;
-font-size:28px
+.login-subtitle{
+    color:#737b8c;
+    margin-bottom:30px;
 }
 
-.auth-card p{
-color:var(--muted);
-margin-bottom:24px
+.form-group{
+    margin-bottom:16px;
 }
 
-.field{
-margin:13px 0
+.form-group label{
+    display:block;
+    font-size:14px;
+    font-weight:600;
+    margin-bottom:7px;
 }
 
-.field label{
-display:block;
-font-size:13px;
-font-weight:bold;
-margin-bottom:7px
+.form-group input{
+    width:100%;
+    border:1px solid #e1e5ef;
+    border-radius:13px;
+    padding:14px;
+    outline:none;
+    transition:.2s;
 }
 
-.field input,
-.field select,
-.field textarea{
-width:100%;
-padding:13px;
-border:1px solid var(--line);
-border-radius:12px;
-outline:none
+.form-group input:focus{
+    border-color:#7567df;
+    box-shadow:0 0 0 3px rgba(117,103,223,.1);
 }
 
-.field input:focus{
-border-color:var(--primary)
+.primary-btn{
+    width:100%;
+    border:none;
+    border-radius:14px;
+    padding:14px;
+    background:#6758d9;
+    color:white;
+    font-size:15px;
+    font-weight:700;
+    cursor:pointer;
+    transition:.2s;
 }
 
-.primary{
-background:var(--primary);
-color:white;
-padding:13px;
-border-radius:12px;
-font-weight:bold;
-width:100%;
-margin-top:8px
+.primary-btn:hover{
+    transform:translateY(-1px);
+    background:#5748c9;
 }
 
-.secondary{
-background:#efedff;
-color:var(--primary);
-padding:11px 15px;
-border-radius:11px;
-font-weight:bold
+.demo{
+    margin-top:16px;
+    text-align:center;
+    color:#858b9a;
+    font-size:12px;
 }
 
-.auth-switch{
-text-align:center;
-margin-top:18px;
-color:var(--muted)
-}
+/* APP */
 
-.auth-switch button{
-background:none;
-color:var(--primary);
-font-weight:bold
-}
-
-.layout{
-display:flex;
-min-height:100vh
+#app{
+    min-height:100vh;
 }
 
 .sidebar{
-width:250px;
-background:white;
-border-right:1px solid var(--line);
-padding:24px 15px;
-position:fixed;
-top:0;
-bottom:0;
-z-index:10
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+    width:245px;
+    background:#fff;
+    border-right:1px solid #e8ebf2;
+    padding:25px 16px;
+    z-index:1000;
 }
 
-.sidebar .logo{
-padding:0 12px 28px
+.sidebar-logo{
+    padding:0 12px 28px;
+    font-size:25px;
+    font-weight:800;
+    color:#6758d9;
 }
 
-.nav button{
-display:flex;
-align-items:center;
-gap:12px;
-width:100%;
-padding:13px 14px;
-margin:4px 0;
-background:transparent;
-color:#686b7e;
-border-radius:12px;
-text-align:left;
-font-weight:bold
+.nav-title{
+    font-size:11px;
+    text-transform:uppercase;
+    color:#a1a7b4;
+    font-weight:700;
+    padding:15px 12px 8px;
 }
 
-.nav button.active,
-.nav button:hover{
-background:#efedff;
-color:var(--primary)
+.nav-btn{
+    width:100%;
+    border:none;
+    background:none;
+    text-align:left;
+    padding:12px;
+    border-radius:12px;
+    cursor:pointer;
+    color:#606879;
+    font-size:14px;
+    font-weight:600;
+    margin-bottom:3px;
 }
 
-.nav-icon{
-width:22px;
-text-align:center
-}
-
-.logout{
-position:absolute;
-bottom:24px;
-left:15px;
-right:15px
+.nav-btn:hover,
+.nav-btn.active{
+    background:#eeeaff;
+    color:#5d4fd0;
 }
 
 .main{
-margin-left:250px;
-width:calc(100% - 250px);
-padding:24px;
-max-width:1500px
+    margin-left:245px;
+    padding:28px;
+    max-width:1500px;
 }
 
 .topbar{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:22px
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:28px;
 }
 
-.topbar h2{
-margin:0;
-font-size:27px
+.page-title{
+    font-size:28px;
+    font-weight:800;
 }
 
-.profile{
-display:flex;
-align-items:center;
-gap:10px;
-background:white;
-padding:8px 12px;
-border-radius:14px;
-box-shadow:var(--shadow)
+.page-subtitle{
+    color:#818898;
+    margin-top:5px;
+    font-size:14px;
+}
+
+.user{
+    display:flex;
+    align-items:center;
+    gap:10px;
 }
 
 .avatar{
-width:36px;
-height:36px;
-border-radius:50%;
-display:grid;
-place-items:center;
-background:#e8e5ff;
-color:var(--primary);
-font-weight:900
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    background:#ded9ff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:800;
+    color:#594ac7;
 }
 
-.page{display:none}
-.page.active{display:block}
-
-.hero{
-background:linear-gradient(135deg,#6c5ce7,#9185f5);
-color:white;
-border-radius:24px;
-padding:27px;
-box-shadow:var(--shadow);
-margin-bottom:20px
-}
-
-.hero h1{
-margin:0 0 7px;
-font-size:30px
-}
-
-.hero p{
-margin:0;
-opacity:.9
-}
+/* CARDS */
 
 .grid{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:16px
-}
-
-.grid2{
-display:grid;
-grid-template-columns:1.4fr 1fr;
-gap:16px;
-margin-top:16px
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
 }
 
 .card{
-background:white;
-border:1px solid var(--line);
-border-radius:var(--radius);
-padding:20px;
-box-shadow:var(--shadow)
+    background:white;
+    border:1px solid #e9ecf3;
+    border-radius:20px;
+    padding:22px;
+    box-shadow:0 5px 20px rgba(35,45,75,.035);
 }
 
-.card h3{
-margin:0 0 14px
+.stat-number{
+    font-size:29px;
+    font-weight:800;
+    margin-top:10px;
 }
 
-.stat b{
-font-size:27px
+.stat-label{
+    color:#858c9b;
+    font-size:13px;
 }
 
-.stat small{
-display:block;
-color:var(--muted);
-margin-top:5px
+.icon{
+    font-size:24px;
 }
 
-.section-head{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:15px
+.section{
+    margin-top:24px;
 }
 
-.section-head h2,
-.section-head h3{
-margin:0
+.section-title{
+    font-size:19px;
+    font-weight:800;
+    margin-bottom:14px;
 }
 
-.list{
-display:flex;
-flex-direction:column;
-gap:10px
+.quick-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
 }
 
-.row{
-display:flex;
-align-items:center;
-justify-content:space-between;
-padding:13px;
-border:1px solid var(--line);
-border-radius:13px;
-background:white
+.quick{
+    cursor:pointer;
+    transition:.2s;
 }
 
-.row-left{
-display:flex;
-align-items:center;
-gap:12px
+.quick:hover{
+    transform:translateY(-3px);
 }
 
-.badge{
-padding:5px 9px;
-border-radius:8px;
-font-size:12px;
-font-weight:bold;
-background:#efedff;
-color:var(--primary)
+.quick h3{
+    margin:10px 0 5px;
 }
 
-.badge.green{
-background:#e7f8ef;
-color:#21935d
+.quick p{
+    color:#858c9b;
+    font-size:13px;
 }
 
-.badge.orange{
-background:#fff1df;
-color:#d27a18
+/* PAGES */
+
+.page{
+    display:none;
 }
 
-.badge.red{
-background:#ffe9e9;
-color:#d95353
+.page.active{
+    display:block;
 }
 
-.toolbar{
-display:flex;
-gap:10px;
-flex-wrap:wrap;
-margin-bottom:16px
+/* TRANSPORT */
+
+.transport-grid{
+    display:grid;
+    grid-template-columns:1fr 1.5fr;
+    gap:20px;
 }
 
-.toolbar input,
-.toolbar select{
-padding:11px 12px;
-border:1px solid var(--line);
-border-radius:11px;
-background:white
+.bus-list{
+    max-height:500px;
+    overflow:auto;
 }
 
-.table{
-width:100%;
-border-collapse:collapse
+.bus{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px;
+    border-bottom:1px solid #edf0f5;
 }
 
-.table th,
-.table td{
-padding:13px;
-border-bottom:1px solid var(--line);
-text-align:left
+.bus:last-child{
+    border:none;
 }
 
-.table th{
-color:var(--muted);
-font-size:13px
+.bus-number{
+    width:48px;
+    height:38px;
+    border-radius:10px;
+    background:#eeeaff;
+    color:#5b4dce;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:800;
 }
 
-.task{
-display:flex;
-gap:12px;
-align-items:center
+.bus-info{
+    flex:1;
+    margin-left:13px;
 }
 
-.task input{
-width:18px;
-height:18px
+.bus-info strong{
+    display:block;
 }
 
-.schedule{
-display:grid;
-grid-template-columns:80px repeat(5,1fr);
-border:1px solid var(--line);
-border-radius:15px;
-overflow:hidden;
-background:white
+.bus-info small{
+    color:#858c9b;
 }
 
-.schedule>div{
-padding:12px;
-border-right:1px solid var(--line);
-border-bottom:1px solid var(--line);
-min-height:70px
+.arrival{
+    font-weight:800;
+    color:#35a66b;
 }
 
-.schedule .day{
-font-weight:bold;
-background:#f7f6ff;
-text-align:center;
-min-height:auto
+#map{
+    height:500px;
+    border-radius:18px;
+    overflow:hidden;
 }
 
-.lesson{
-background:#efedff;
-border-left:4px solid var(--primary);
-border-radius:9px;
-padding:8px;
-font-size:12px
+.map-buttons{
+    display:flex;
+    gap:10px;
+    margin-bottom:14px;
+    flex-wrap:wrap;
 }
 
-.lesson b{
-display:block;
-font-size:13px
+.small-btn{
+    border:1px solid #e0e4ed;
+    background:white;
+    padding:10px 14px;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:600;
 }
 
-.map-wrap{
-height:560px;
-border-radius:18px;
-overflow:hidden;
-border:1px solid var(--line);
-background:#eef1f7;
-position:relative
+.small-btn:hover{
+    background:#f1efff;
 }
 
-.fake-map{
-height:100%;
-position:relative;
-background:
-linear-gradient(25deg,#dcefe4 0 18%,transparent 18% 100%),
-linear-gradient(70deg,#e8e3d6 0 12%,transparent 12% 100%),
-#edf0f4;
-overflow:hidden
+/* REAL TIME */
+
+.realtime-box{
+    background:linear-gradient(135deg,#5d4fd0,#8174ec);
+    color:white;
+    border-radius:20px;
+    padding:25px;
+    margin-bottom:20px;
 }
 
-.road{
-position:absolute;
-background:white;
-border:2px solid #d6d8df;
-border-radius:99px;
-transform:rotate(-15deg)
+.realtime-box h2{
+    margin-bottom:7px;
 }
 
-.road.r1{
-width:120%;
-height:58px;
-left:-8%;
-top:38%
+.realtime-box p{
+    opacity:.85;
+    font-size:13px;
 }
 
-.road.r2{
-width:110%;
-height:45px;
-left:-5%;
-top:62%;
-transform:rotate(18deg)
+.realtime-btn{
+    display:inline-block;
+    margin-top:17px;
+    background:white;
+    color:#5748c9;
+    text-decoration:none;
+    padding:12px 18px;
+    border-radius:12px;
+    font-weight:700;
 }
 
-.road.r3{
-width:35px;
-height:120%;
-left:53%;
-top:-10%;
-transform:rotate(8deg)
-}
-
-.water{
-position:absolute;
-right:-10%;
-top:-5%;
-width:42%;
-height:75%;
-background:#bfe4f1;
-border-radius:50%
-}
-
-.pin{
-position:absolute;
-width:28px;
-height:28px;
-border-radius:50% 50% 50% 0;
-transform:rotate(-45deg);
-background:var(--primary);
-box-shadow:0 4px 10px #5555
-}
-
-.pin i{
-display:block;
-width:9px;
-height:9px;
-background:white;
-border-radius:50%;
-margin:9px
-}
-
-.pin.stop{background:#ff8a3d}
-.pin.shop{background:#35b779}
-.pin.cafe{background:#c47a4b}
-
-.map-label{
-position:absolute;
-background:white;
-padding:7px 9px;
-border-radius:8px;
-font-size:12px;
-font-weight:bold;
-box-shadow:0 3px 12px #0002
-}
+/* PLACES */
 
 .place-grid{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:14px
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
 }
 
 .place{
-padding:17px;
-border:1px solid var(--line);
-border-radius:15px;
-background:white
+    overflow:hidden;
 }
 
-.place .emoji{
-font-size:28px
+.place-top{
+    height:120px;
+    background:linear-gradient(135deg,#ddd8ff,#eaf7ff);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:45px;
 }
 
-.place h4{
-margin:8px 0 4px
+.place-body{
+    padding:18px;
 }
 
-.place p{
-margin:0;
-color:var(--muted);
-font-size:13px
+.place-body h3{
+    margin-bottom:6px;
 }
 
-.budget{
-display:flex;
-align-items:center;
-gap:18px
+.place-body p{
+    color:#838a99;
+    font-size:13px;
+    line-height:1.5;
 }
 
-.circle{
-width:120px;
-height:120px;
-border-radius:50%;
-display:grid;
-place-items:center;
-background:conic-gradient(var(--primary) 0 62%,#ececf4 62%);
-position:relative
+.place-link{
+    display:inline-block;
+    margin-top:12px;
+    text-decoration:none;
+    color:#5d4fd0;
+    font-size:13px;
+    font-weight:700;
 }
 
-.circle:after{
-content:"";
-position:absolute;
-inset:12px;
-background:white;
-border-radius:50%
+/* SCHEDULE */
+
+.task{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:14px;
+    border-bottom:1px solid #edf0f5;
 }
 
-.circle span{
-position:relative;
-z-index:1;
-font-weight:900
+.task input{
+    width:18px;
+    height:18px;
 }
 
-.mobile-nav{
-display:none
+.task small{
+    color:#8a91a0;
 }
 
-@media(max-width:900px){
+/* PROFILE */
 
-.sidebar{
-display:none
-}
-
-.main{
-margin-left:0;
-width:100%;
-padding:15px;
-padding-bottom:80px
+.profile-card{
+    max-width:650px;
 }
 
-.grid{
-grid-template-columns:repeat(2,1fr)
+.profile-row{
+    display:flex;
+    justify-content:space-between;
+    padding:16px 0;
+    border-bottom:1px solid #edf0f5;
 }
 
-.grid2{
-grid-template-columns:1fr
+.logout{
+    margin-top:20px;
+    border:none;
+    background:#ffe8e8;
+    color:#d64545;
+    padding:12px 18px;
+    border-radius:12px;
+    cursor:pointer;
+    font-weight:700;
 }
 
-.place-grid{
-grid-template-columns:1fr 1fr
+/* MOBILE */
+
+.mobile-menu{
+    display:none;
 }
 
-.mobile-nav{
-display:flex;
-position:fixed;
-bottom:0;
-left:0;
-right:0;
-background:white;
-border-top:1px solid var(--line);
-z-index:20;
-justify-content:space-around;
-padding:8px
+@media(max-width:1000px){
+
+    .sidebar{
+        width:210px;
+    }
+
+    .main{
+        margin-left:210px;
+    }
+
+    .grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .quick-grid,
+    .place-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
 }
 
-.mobile-nav button{
-background:none;
-color:#777;
-font-size:11px
+@media(max-width:700px){
+
+    .sidebar{
+        display:none;
+    }
+
+    .main{
+        margin-left:0;
+        padding:18px;
+    }
+
+    .mobile-menu{
+        display:block;
+        border:none;
+        background:#6758d9;
+        color:white;
+        width:42px;
+        height:42px;
+        border-radius:12px;
+        cursor:pointer;
+    }
+
+    .grid,
+    .quick-grid,
+    .place-grid,
+    .transport-grid{
+        grid-template-columns:1fr;
+    }
+
+    .topbar{
+        gap:10px;
+    }
+
+    .page-title{
+        font-size:23px;
+    }
+
+    .login-box{
+        padding:25px;
+    }
 }
 
-.mobile-nav button.active{
-color:var(--primary)
-}
-
-.schedule{
-grid-template-columns:55px repeat(5,130px);
-overflow:auto
-}
-
-.schedule>div{
-min-width:130px
-}
-
-.schedule>div:first-child{
-min-width:55px
-}
-
-.map-wrap{
-height:430px
-}
-}
-
-@media(max-width:550px){
-
-.grid{
-grid-template-columns:1fr 1fr
-}
-
-.place-grid{
-grid-template-columns:1fr
-}
-
-.hero h1{
-font-size:24px
-}
-
-.topbar h2{
-font-size:22px
-}
-}
 </style>
 </head>
 
 <body>
 
-<div id="app"></div>
+<!-- LOGIN -->
 
-<script>
+<div id="loginScreen">
 
-const app=document.getElementById("app");
+    <div class="login-box">
 
-const KEY="unifloUser";
+        <div class="logo">UniFlo 🎓</div>
 
-const state={
-page:"home",
-user:JSON.parse(localStorage.getItem(KEY)||"null"),
-auth:"login"
-};
+        <p class="login-subtitle">
+            Твоят студентски живот. На едно място.
+        </p>
 
-const busLines=[
-["14","ЖП гара ↔ Владиславово","ЖП гара","Владиславово","06:00–22:30"],
-["17","Почивка ↔ Владиславово","Почивка","Владиславово","05:40–23:00"],
-["20","ЖП гара ↔ Аспарухово","ЖП гара","Аспарухово","05:30–23:10"],
-["31A","ЖП гара ↔ Златни пясъци","ЖП гара","Златни пясъци","06:00–22:00"],
-["409","Летище ↔ Златни пясъци","Летище Варна","Златни пясъци","05:00–23:30"]
-];
+        <div class="form-group">
+            <label>Име</label>
+            <input id="nameInput" placeholder="Въведи име">
+        </div>
 
-const stops=[
-"Катедралата",
-"Община Варна",
-"Чаталджа",
-"ВИНС",
-"Спортна зала",
-"Почивка",
-"ЖП гара",
-"Севастопол",
-"Централна поща",
-"Златни пясъци"
-];
+        <div class="form-group">
+            <label>Имейл</label>
+            <input id="emailInput" type="email" placeholder="student@email.com">
+        </div>
 
-const places=[
-["☕","Кафе Морско","Кафене","Близо до ВИНС"],
-["🛒","Lidl","Супермаркет","Център / Чаталджа"],
-["🛍️","Grand Mall","Търговски център","бул. Андрей Сахаров"],
-["☕","Costa Coffee","Кафене","Център"],
-["💊","Аптека","Аптека","24/7 опция в центъра"],
-["🍕","Пицария","Храна","В близост до общежитията"]
-];
+        <div class="form-group">
+            <label>Парола</label>
+            <input id="passwordInput" type="password" placeholder="••••••••">
+        </div>
 
-function save(){
-localStorage.setItem(KEY,JSON.stringify(state.user))
-}
+        <button class="primary-btn" onclick="register()">
+            Създай профил
+        </button>
 
-function authScreen(){
+        <div class="demo">
+            Данните се запазват локално на устройството.
+        </div>
 
-app.innerHTML=`
-
-<div class="auth">
-
-<div class="auth-card">
-
-<div class="logo">
-Uni<span>Flo</span> 🎓
-</div>
-
-<h1>
-${state.auth==="login"
-?"Добре дошла обратно!"
-:"Създай своя UniFlo профил"}
-</h1>
-
-<p>
-${state.auth==="login"
-?"Всичко за студентския ти живот на едно място."
-:"Регистрация за няколко секунди."}
-</p>
-
-${
-state.auth==="register"
-?
-`
-<div class="field">
-<label>Име</label>
-<input id="name" placeholder="Твоето име">
-</div>
-`
-:""
-}
-
-<div class="field">
-<label>Имейл</label>
-<input id="email" type="email" placeholder="name@email.com">
-</div>
-
-<div class="field">
-<label>Парола</label>
-<input id="pass" type="password" placeholder="••••••••">
-</div>
-
-<button class="primary" onclick="submitAuth()">
-${state.auth==="login"?"Вход":"Регистрация"}
-</button>
-
-<div class="auth-switch">
-
-${
-state.auth==="login"
-?"Нямаш профил?"
-:"Вече имаш профил?"
-}
-
-<button onclick="
-state.auth=state.auth==='login'?'register':'login';
-authScreen()
-">
-
-${
-state.auth==="login"
-?"Регистрирай се"
-:"Влез"
-}
-
-</button>
+    </div>
 
 </div>
 
-</div>
 
-</div>
-`;
-}
+<!-- APP -->
 
-function submitAuth(){
+<div id="app" class="hidden">
 
-const email=document.getElementById("email").value.trim();
-const pass=document.getElementById("pass").value.trim();
-
-if(!email||!pass){
-alert("Попълни имейла и паролата.");
-return
-}
-
-state.user={
-name:
-state.auth==="register"
-?(document.getElementById("name").value.trim()||"Студент")
-:"Велислава",
-email
-};
-
-save();
-render();
-}
-
-const titles={
-home:"Начало",
-schedule:"Моят график",
-tasks:"Моите задачи",
-exams:"Изпити и оценки",
-transport:"Автобуси и спирки",
-map:"Карта на Варна",
-places:"Места около мен",
-budget:"Моят бюджет",
-notes:"Бележки"
-};
-
-function nav(){
-
-const items=[
-["home","⌂","Начало"],
-["schedule","📅","График"],
-["tasks","✓","Задачи"],
-["exams","📝","Изпити"],
-["transport","🚌","Автобуси"],
-["map","🗺️","Карта"],
-["places","☕","Места"],
-["budget","💰","Бюджет"],
-["notes","🗒️","Бележки"]
-];
-
-return items.map(x=>`
-
-<button
-class="${state.page===x[0]?"active":""}"
-onclick="go('${x[0]}')">
-
-<span class="nav-icon">${x[1]}</span>
-
-${x[2]}
-
-</button>
-
-`).join("");
-}
-
-function render(){
-
-if(!state.user){
-authScreen();
-return
-}
-
-app.innerHTML=`
-
-<div class="layout">
+<!-- SIDEBAR -->
 
 <aside class="sidebar">
 
-<div class="logo">
-Uni<span>Flo</span> 🎓
-</div>
+    <div class="sidebar-logo">
+        UniFlo 🎓
+    </div>
 
-<nav class="nav">
-${nav()}
-</nav>
+    <div class="nav-title">Основно</div>
 
-<button class="nav logout" onclick="logout()">
-↪ Изход
-</button>
+    <button class="nav-btn active" onclick="showPage('home',this)">
+        🏠 Начало
+    </button>
+
+    <button class="nav-btn" onclick="showPage('transport',this)">
+        🚌 Транспорт
+    </button>
+
+    <button class="nav-btn" onclick="showPage('mapPage',this)">
+        📍 Карта
+    </button>
+
+    <button class="nav-btn" onclick="showPage('places',this)">
+        ☕ Места
+    </button>
+
+    <div class="nav-title">Студентски живот</div>
+
+    <button class="nav-btn" onclick="showPage('schedule',this)">
+        📅 Задачи
+    </button>
+
+    <button class="nav-btn" onclick="showPage('budget',this)">
+        💰 Бюджет
+    </button>
+
+    <button class="nav-btn" onclick="showPage('profile',this)">
+        👤 Профил
+    </button>
 
 </aside>
 
+
 <main class="main">
 
-<div class="topbar">
+<!-- HOME -->
 
-<h2>
-${titles[state.page]}
-</h2>
+<section id="home" class="page active">
 
-<div class="profile">
+    <div class="topbar">
 
-<div class="avatar">
-${(state.user.name||"В")[0].toUpperCase()}
-</div>
+        <div>
+            <div class="page-title">
+                Здравей, <span id="userName">Студент</span> 👋
+            </div>
 
-<b>${state.user.name}</b>
+            <div class="page-subtitle">
+                Всичко важно за студентския ти живот.
+            </div>
+        </div>
 
-</div>
+        <div class="user">
+            <div class="avatar" id="avatar">В</div>
+        </div>
 
-</div>
+    </div>
 
-${pages[state.page]()}
+
+    <div class="grid">
+
+        <div class="card">
+            <div class="icon">🚌</div>
+            <div class="stat-number">12</div>
+            <div class="stat-label">Автобуса наблизо</div>
+        </div>
+
+        <div class="card">
+            <div class="icon">📍</div>
+            <div class="stat-number">38</div>
+            <div class="stat-label">Спирки във Варна</div>
+        </div>
+
+        <div class="card">
+            <div class="icon">📚</div>
+            <div class="stat-number">4</div>
+            <div class="stat-label">Задачи за седмицата</div>
+        </div>
+
+        <div class="card">
+            <div class="icon">☕</div>
+            <div class="stat-number">24</div>
+            <div class="stat-label">Места наблизо</div>
+        </div>
+
+    </div>
+
+
+    <div class="section">
+
+        <div class="section-title">
+            Бърз достъп
+        </div>
+
+        <div class="quick-grid">
+
+            <div class="card quick" onclick="showPage('transport')">
+                <div class="icon">🚌</div>
+                <h3>Автобуси</h3>
+                <p>Линии, спирки и информация за движението.</p>
+            </div>
+
+            <div class="card quick" onclick="showPage('mapPage')">
+                <div class="icon">🗺️</div>
+                <h3>Карта на Варна</h3>
+                <p>Намери спирки, университет и интересни места.</p>
+            </div>
+
+            <div class="card quick" onclick="showPage('places')">
+                <div class="icon">☕</div>
+                <h3>Магазини & кафенета</h3>
+                <p>Полезни места около университета.</p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- TRANSPORT -->
+
+<section id="transport" class="page">
+
+    <div class="topbar">
+
+        <div>
+            <div class="page-title">🚌 Градски транспорт</div>
+            <div class="page-subtitle">
+                Варна • информация за автобусите
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="realtime-box">
+
+        <h2>🟢 Автобуси в реално време</h2>
+
+        <p>
+            Официалната система на Варна показва текущото движение
+            на автобуси и тролейбуси чрез GPS.
+        </p>
+
+        <a
+        class="realtime-btn"
+        href="https://itransport.varna.bg/Map/Index.html#/"
+        target="_blank">
+            Отвори реалното движение →
+        </a>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="section-title">
+            Популярни линии
+        </div>
+
+        <div class="bus-list">
+
+            <div class="bus">
+                <div class="bus-number">9</div>
+                <div class="bus-info">
+                    <strong>Автобус 9</strong>
+                    <small>ЖП гара → Виница</small>
+                </div>
+                <div class="arrival">5 мин</div>
+            </div>
+
+            <div class="bus">
+                <div class="bus-number">14</div>
+                <div class="bus-info">
+                    <strong>Автобус 14</strong>
+                    <small>Почивка → Владиславово</small>
+                </div>
+                <div class="arrival">8 мин</div>
+            </div>
+
+            <div class="bus">
+                <div class="bus-number">17</div>
+                <div class="bus-info">
+                    <strong>Автобус 17</strong>
+                    <small>Квартали → Център</small>
+                </div>
+                <div class="arrival">11 мин</div>
+            </div>
+
+            <div class="bus">
+                <div class="bus-number">31</div>
+                <div class="bus-info">
+                    <strong>Автобус 31</strong>
+                    <small>Център → Златни пясъци</small>
+                </div>
+                <div class="arrival">14 мин</div>
+            </div>
+
+            <div class="bus">
+                <div class="bus-number">409</div>
+                <div class="bus-info">
+                    <strong>Автобус 409</strong>
+                    <small>Летище → Варна → Златни пясъци</small>
+                </div>
+                <div class="arrival">6 мин</div>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- MAP -->
+
+<section id="mapPage" class="page">
+
+    <div class="topbar">
+
+        <div>
+            <div class="page-title">🗺️ Карта на Варна</div>
+            <div class="page-subtitle">
+                Университет, спирки и важни места
+            </div>
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <div class="map-buttons">
+
+            <button class="small-btn"
+            onclick="goToVINS()">
+                🎓 ВИНС
+            </button>
+
+            <button class="small-btn"
+            onclick="findLocation()">
+                📍 Моето местоположение
+            </button>
+
+            <button class="small-btn"
+            onclick="openTransportMap()">
+                🚌 Реален транспорт
+            </button>
+
+        </div>
+
+        <div id="map"></div>
+
+    </div>
+
+</section>
+
+
+<!-- PLACES -->
+
+<section id="places" class="page">
+
+    <div class="topbar">
+
+        <div>
+            <div class="page-title">☕ Места във Варна</div>
+            <div class="page-subtitle">
+                Полезни места за студентския живот.
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="place-grid">
+
+        <div class="card place">
+
+            <div class="place-top">☕</div>
+
+            <div class="place-body">
+
+                <h3>Кафенета</h3>
+
+                <p>
+                    Намери кафенета около ВИНС,
+                    центъра и Морската градина.
+                </p>
+
+                <a class="place-link"
+                href="https://www.google.com/maps/search/cafes+near+University+of+Economics+Varna"
+                target="_blank">
+                    Отвори картата →
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <div class="card place">
+
+            <div class="place-top">🛒</div>
+
+            <div class="place-body">
+
+                <h3>Магазини</h3>
+
+                <p>
+                    Супермаркети и магазини около университета
+                    и общежитията.
+                </p>
+
+                <a class="place-link"
+                href="https://www.google.com/maps/search/supermarkets+near+University+of+Economics+Varna"
+                target="_blank">
+                    Намери магазини →
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <div class="card place">
+
+            <div class="place-top">💊</div>
+
+            <div class="place-body">
+
+                <h3>Аптеки</h3>
+
+                <p>
+                    Аптеки около университета и центъра.
+                </p>
+
+                <a class="place-link"
+                href="https://www.google.com/maps/search/pharmacy+near+University+of+Economics+Varna"
+                target="_blank">
+                    Намери аптека →
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <div class="card place">
+
+            <div class="place-top">🍕</div>
+
+            <div class="place-body">
+
+                <h3>Храна</h3>
+
+                <p>
+                    Ресторанти, бързо хранене и места за хапване.
+                </p>
+
+                <a class="place-link"
+                href="https://www.google.com/maps/search/restaurants+near+University+of+Economics+Varna"
+                target="_blank">
+                    Намери храна →
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <div class="card place">
+
+            <div class="place-top">📚</div>
+
+            <div class="place-body">
+
+                <h3>Книжарници</h3>
+
+                <p>
+                    Книжарници и места за принтиране.
+                </p>
+
+                <a class="place-link"
+                href="https://www.google.com/maps/search/bookstores+near+University+of+Economics+Varna"
+                target="_blank">
+                    Намери книжарница →
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <div class="card place">
+
+            <div class="place-top">🏋️</div>
+
+            <div class="place-body">
+
+                <h3>Спорт</h3>
+
+                <p>
+                    Фитнеси и спортни обекти около университета.
+                </p>
+
+                <a class="place-link"
+                href="https://www.google.com/maps/search/gyms+near+University+of+Economics+Varna"
+                target="_blank">
+                    Намери фитнес →
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- SCHEDULE -->
+
+<section id="schedule" class="page">
+
+    <div class="topbar">
+
+        <div>
+            <div class="page-title">📅 Моите задачи</div>
+            <div class="page-subtitle">
+                Не оставяй всичко за 23:58. Човечеството вече е доказало, че това не работи.
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="card">
+
+        <div class="section-title">
+            Тази седмица
+        </div>
+
+        <div class="task">
+            <input type="checkbox">
+            <div>
+                <strong>Лекция по икономика</strong><br>
+                <small>Понеделник • 10:00</small>
+            </div>
+        </div>
+
+        <div class="task">
+            <input type="checkbox">
+            <div>
+                <strong>Да прочета материала</strong><br>
+                <small>Вторник</small>
+            </div>
+        </div>
+
+        <div class="task">
+            <input type="checkbox">
+            <div>
+                <strong>Подготовка за контролно</strong><br>
+                <small>Четвъртък</small>
+            </div>
+        </div>
+
+        <div class="task">
+            <input type="checkbox">
+            <div>
+                <strong>Проект</strong><br>
+                <small>Петък</small>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- BUDGET -->
+
+<section id="budget" class="page">
+
+    <div class="topbar">
+
+        <div>
+            <div class="page-title">💰 Студентски бюджет</div>
+            <div class="page-subtitle">
+                Следи разходите си.
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="grid">
+
+        <div class="card">
+            <div class="stat-label">Месечен бюджет</div>
+            <div class="stat-number">800 лв.</div>
+        </div>
+
+        <div class="card">
+            <div class="stat-label">Изхарчени</div>
+            <div class="stat-number">436 лв.</div>
+        </div>
+
+        <div class="card">
+            <div class="stat-label">Остават</div>
+            <div class="stat-number">364 лв.</div>
+        </div>
+
+        <div class="card">
+            <div class="stat-label">Този месец</div>
+            <div class="stat-number">54%</div>
+        </div>
+
+    </div>
+
+
+    <div class="section">
+
+        <div class="card">
+
+            <div class="section-title">
+                Последни разходи
+            </div>
+
+            <div class="task">
+                ☕
+                <div>
+                    <strong>Кафе</strong><br>
+                    <small>4.50 лв.</small>
+                </div>
+            </div>
+
+            <div class="task">
+                🚌
+                <div>
+                    <strong>Транспорт</strong><br>
+                    <small>2.00 лв.</small>
+                </div>
+            </div>
+
+            <div class="task">
+                🛒
+                <div>
+                    <strong>Храна</strong><br>
+                    <small>18.60 лв.</small>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- PROFILE -->
+
+<section id="profile" class="page">
+
+    <div class="topbar">
+
+        <div>
+            <div class="page-title">👤 Профил</div>
+            <div class="page-subtitle">
+                Твоите данни в UniFlo.
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="card profile-card">
+
+        <div class="profile-row">
+            <strong>Име</strong>
+            <span id="profileName">-</span>
+        </div>
+
+        <div class="profile-row">
+            <strong>Имейл</strong>
+            <span id="profileEmail">-</span>
+        </div>
+
+        <div class="profile-row">
+            <strong>Университет</strong>
+            <span>ИУ – Варна</span>
+        </div>
+
+        <div class="profile-row">
+            <strong>Град</strong>
+            <span>Варна</span>
+        </div>
+
+        <button class="logout" onclick="logout()">
+            Изход
+        </button>
+
+    </div>
+
+</section>
+
 
 </main>
 
-<div class="mobile-nav">
-
-${[
-["home","⌂"],
-["schedule","📅"],
-["tasks","✓"],
-["transport","🚌"],
-["map","🗺️"],
-["places","☕"]
-].map(x=>`
-
-<button
-class="${state.page===x[0]?"active":""}"
-onclick="go('${x[0]}')">
-
-${x[1]}<br>
-
-${titles[x[0]].split(" ")[0]}
-
-</button>
-
-`).join("")}
-
 </div>
 
-</div>
-`;
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<script>
+
+/* USER */
+
+function register(){
+
+    const name =
+        document.getElementById("nameInput").value.trim();
+
+    const email =
+        document.getElementById("emailInput").value.trim();
+
+    const password =
+        document.getElementById("passwordInput").value.trim();
+
+    if(!name || !email || !password){
+
+        alert("Попълни всички полета.");
+        return;
+
+    }
+
+    localStorage.setItem(
+        "unifloUser",
+        JSON.stringify({
+            name:name,
+            email:email
+        })
+    );
+
+    loadApp();
 }
 
-const pages={
 
-home:()=>`
+function loadApp(){
 
-<div class="hero">
+    const data =
+        JSON.parse(localStorage.getItem("unifloUser"));
 
-<h1>
-Здравей, ${state.user.name}! 👋
-</h1>
+    if(!data) return;
 
-<p>
-UniFlo събира университета, града и ежедневието ти на едно място.
-</p>
+    document.getElementById("loginScreen")
+        .classList.add("hidden");
 
-</div>
+    document.getElementById("app")
+        .classList.remove("hidden");
 
-<div class="grid">
+    document.getElementById("userName")
+        .textContent=data.name;
 
-<div class="card stat">
-<b>4</b>
-<small>Задачи за тази седмица</small>
-</div>
+    document.getElementById("profileName")
+        .textContent=data.name;
 
-<div class="card stat">
-<b>2</b>
-<small>Предстоящи изпити</small>
-</div>
+    document.getElementById("profileEmail")
+        .textContent=data.email;
 
-<div class="card stat">
-<b>312 лв.</b>
-<small>Оставащ бюджет</small>
-</div>
+    document.getElementById("avatar")
+        .textContent=data.name.charAt(0).toUpperCase();
 
-<div class="card stat">
-<b>3</b>
-<small>Занятия днес</small>
-</div>
+    setTimeout(initMap,100);
 
-</div>
-
-<div class="grid2">
-
-<div class="card">
-
-<div class="section-head">
-
-<h3>📅 Днес</h3>
-
-<button
-class="secondary"
-onclick="go('schedule')">
-График
-</button>
-
-</div>
-
-<div class="list">
-
-<div class="row">
-<div class="row-left">
-<span class="badge">10:00</span>
-<div>
-<b>Икономика</b>
-<small>Зала 302</small>
-</div>
-</div>
-</div>
-
-<div class="row">
-<div class="row-left">
-<span class="badge">12:00</span>
-<div>
-<b>Туризъм</b>
-<small>Аула</small>
-</div>
-</div>
-</div>
-
-<div class="row">
-<div class="row-left">
-<span class="badge">15:00</span>
-<div>
-<b>Чужд език</b>
-<small>Кабинет 18</small>
-</div>
-</div>
-</div>
-
-</div>
-
-</div>
-
-<div class="card">
-
-<h3>⚡ Бърз достъп</h3>
-
-<div class="list">
-
-<button class="secondary"
-onclick="go('transport')">
-🚌 Намери автобус
-</button>
-
-<button class="secondary"
-onclick="go('map')">
-🗺️ Отвори карта
-</button>
-
-<button class="secondary"
-onclick="go('places')">
-☕ Кафенета и магазини
-</button>
-
-</div>
-
-</div>
-
-</div>
-`,
-
-schedule:()=>`
-
-<div class="card">
-
-<div class="section-head">
-
-<h3>Седмица</h3>
-
-<button
-class="secondary"
-onclick="alert('Добавянето на занятия ще бъде включено тук.')">
-＋ Добави
-</button>
-
-</div>
-
-<div class="schedule">
-
-<div></div>
-
-${["Пон","Вт","Ср","Чет","Пет"]
-.map(d=>`<div class="day">${d}</div>`).join("")}
-
-<div>09:00</div>
-
-<div>
-<div class="lesson">
-<b>Икономика</b>
-Зала 302
-</div>
-</div>
-
-<div></div>
-<div></div>
-
-<div>
-<div class="lesson">
-<b>Туризъм</b>
-Аула
-</div>
-</div>
-
-<div></div>
-
-<div>11:00</div>
-
-<div></div>
-
-<div>
-<div class="lesson">
-<b>Чужд език</b>
-Каб. 18
-</div>
-</div>
-
-<div></div>
-<div></div>
-
-<div>
-<div class="lesson">
-<b>Маркетинг</b>
-Зала 205
-</div>
-</div>
-
-<div>13:00</div>
-
-<div></div>
-<div></div>
-
-<div>
-<div class="lesson">
-<b>Статистика</b>
-Зала 101
-</div>
-</div>
-
-<div></div>
-<div></div>
-
-</div>
-
-</div>
-`,
-
-tasks:()=>`
-
-<div class="card">
-
-<div class="section-head">
-
-<h3>Задачи</h3>
-
-<button
-class="secondary"
-onclick="addTask()">
-＋ Добави задача
-</button>
-
-</div>
-
-<div id="tasksList" class="list">
-
-${[
-"Курсова работа по туризъм",
-"Презентация по маркетинг",
-"Подготовка за тест",
-"Преговор по икономика"
-].map((t,i)=>`
-
-<div class="row">
-
-<div class="task">
-
-<input
-type="checkbox"
-onchange="
-this.parentElement.parentElement.classList.toggle('done')
-">
-
-<span>${t}</span>
-
-</div>
-
-<span class="badge ${
-i===2
-?"red"
-:i===1
-?"orange"
-:""
-}">
-${i<2?"Тази седмица":"Следваща седмица"}
-</span>
-
-</div>
-
-`).join("")}
-
-</div>
-
-</div>
-`,
-
-exams:()=>`
-
-<div class="card">
-
-<div class="section-head">
-
-<h3>Предстоящи изпити</h3>
-
-<button class="secondary">
-＋ Добави
-</button>
-
-</div>
-
-<table class="table">
-
-<tr>
-<th>Предмет</th>
-<th>Дата</th>
-<th>Час</th>
-<th>Зала</th>
-</tr>
-
-<tr>
-<td><b>Икономика</b></td>
-<td>18 юни</td>
-<td>10:00</td>
-<td>302</td>
-</tr>
-
-<tr>
-<td><b>Туризъм</b></td>
-<td>24 юни</td>
-<td>13:00</td>
-<td>Аула</td>
-</tr>
-
-<tr>
-<td><b>Маркетинг</b></td>
-<td>30 юни</td>
-<td>09:00</td>
-<td>205</td>
-</tr>
-
-</table>
-
-</div>
-`,
-
-transport:()=>`
-
-<div class="card">
-
-<div class="section-head">
-
-<h3>🚌 Автобуси във Варна</h3>
-
-<button
-class="secondary"
-onclick="alert('Тук по-късно може да се свърже реална транспортна информация.')">
-ℹ Реално време
-</button>
-
-</div>
-
-<div class="toolbar">
-
-<input
-id="busSearch"
-placeholder="Търси линия или спирка..."
-oninput="filterBuses()">
-
-</div>
-
-<div id="busList" class="list">
-
-${busLines.map(b=>`
-
-<div class="row bus">
-
-<div class="row-left">
-
-<span class="badge">
-${b[0]}
-</span>
-
-<div>
-
-<b>${b[1]}</b>
-
-<small>
-${b[2]} → ${b[3]}
-</small>
-
-</div>
-
-</div>
-
-<span class="badge green">
-${b[4]}
-</span>
-
-</div>
-
-`).join("")}
-
-</div>
-
-<hr style="
-border:0;
-border-top:1px solid var(--line);
-margin:22px 0
-">
-
-<h3>📍 Основни спирки</h3>
-
-<div class="place-grid">
-
-${stops.map(s=>`
-
-<div class="place">
-
-<div class="emoji">
-📍
-</div>
-
-<h4>${s}</h4>
-
-<p>
-Спирка във Варна
-</p>
-
-</div>
-
-`).join("")}
-
-</div>
-
-</div>
-`,
-
-map:()=>`
-
-<div class="card">
-
-<div class="section-head">
-
-<h3>🗺️ Карта на Варна</h3>
-
-<button
-class="secondary"
-onclick="alert('Тук може да бъде добавена GPS локация.')">
-📍 Моето място
-</button>
-
-</div>
-
-<div class="map-wrap">
-
-<div class="fake-map">
-
-<div class="water"></div>
-
-<div class="road r1"></div>
-<div class="road r2"></div>
-<div class="road r3"></div>
-
-<div class="pin"
-style="left:18%;top:42%">
-<i></i>
-</div>
-
-<div class="map-label"
-style="left:calc(18% + 20px);top:39%">
-ВИНС
-</div>
-
-<div class="pin stop"
-style="left:30%;top:55%">
-<i></i>
-</div>
-
-<div class="map-label"
-style="left:calc(30% + 20px);top:52%">
-Чаталджа
-</div>
-
-<div class="pin stop"
-style="left:54%;top:34%">
-<i></i>
-</div>
-
-<div class="map-label"
-style="left:calc(54% + 20px);top:31%">
-Катедралата
-</div>
-
-<div class="pin stop"
-style="left:68%;top:51%">
-<i></i>
-</div>
-
-<div class="map-label"
-style="left:calc(68% + 20px);top:48%">
-ЖП гара
-</div>
-
-<div class="pin shop"
-style="left:78%;top:27%">
-<i></i>
-</div>
-
-<div class="map-label"
-style="left:calc(78% - 20px);top:23%">
-Магазини
-</div>
-
-<div class="pin cafe"
-style="left:48%;top:65%">
-<i></i>
-</div>
-
-<div class="map-label"
-style="left:calc(48% + 20px);top:62%">
-Кафенета
-</div>
-
-</div>
-
-</div>
-
-<p style="color:var(--muted);font-size:13px">
-
-Карта на основните места и спирки във Варна.
-
-</p>
-
-</div>
-`,
-
-places:()=>`
-
-<div class="card">
-
-<div class="toolbar">
-
-<input
-placeholder="🔎 Търси кафе, магазин, аптека..."
-oninput="filterPlaces(this.value)">
-
-<select>
-
-<option>Всички</option>
-<option>Кафенета</option>
-<option>Магазини</option>
-<option>Аптеки</option>
-
-</select>
-
-</div>
-
-<div id="placesGrid" class="place-grid">
-
-${places.map(p=>`
-
-<div class="place">
-
-<div class="emoji">
-${p[0]}
-</div>
-
-<h4>${p[1]}</h4>
-
-<p>
-${p[2]} · ${p[3]}
-</p>
-
-<br>
-
-<button
-class="secondary"
-onclick="go('map')">
-
-🗺️ На картата
-
-</button>
-
-</div>
-
-`).join("")}
-
-</div>
-
-</div>
-`,
-
-budget:()=>`
-
-<div class="grid2">
-
-<div class="card">
-
-<h3>💰 Месечен бюджет</h3>
-
-<div class="budget">
-
-<div class="circle">
-<span>62%</span>
-</div>
-
-<div>
-
-<b style="font-size:28px">
-312 лв.
-</b>
-
-<p style="color:var(--muted)">
-остават от 500 лв.
-</p>
-
-<span class="badge green">
-В рамките на бюджета
-</span>
-
-</div>
-
-</div>
-
-</div>
-
-<div class="card">
-
-<h3>Разходи</h3>
-
-<div class="list">
-
-<div class="row">
-<span>🍔 Храна</span>
-<b>96 лв.</b>
-</div>
-
-<div class="row">
-<span>🚌 Транспорт</span>
-<b>32 лв.</b>
-</div>
-
-<div class="row">
-<span>☕ Кафе</span>
-<b>28 лв.</b>
-</div>
-
-<div class="row">
-<span>🛍️ Други</span>
-<b>32 лв.</b>
-</div>
-
-</div>
-
-</div>
-
-</div>
-`,
-
-notes:()=>`
-
-<div class="card">
-
-<div class="section-head">
-
-<h3>🗒️ Моите бележки</h3>
-
-<button
-class="secondary"
-onclick="saveNote()">
-Запази
-</button>
-
-</div>
-
-<textarea
-id="note"
-rows="14"
-style="width:100%;padding:15px;border:1px solid var(--line);border-radius:12px"
-placeholder="Напиши бележка..."
->${localStorage.getItem("unifloNote")||""}</textarea>
-
-</div>
-`
-};
-
-function go(p){
-state.page=p;
-render()
 }
+
 
 function logout(){
-state.user=null;
-localStorage.removeItem(KEY);
-authScreen()
+
+    localStorage.removeItem("unifloUser");
+
+    location.reload();
+
 }
 
-function addTask(){
 
-const t=prompt("Нова задача:");
+/* NAVIGATION */
 
-if(!t)return;
+function showPage(id,button){
 
-document
-.getElementById("tasksList")
-.insertAdjacentHTML(
-"beforeend",
-`
-<div class="row">
+    document.querySelectorAll(".page")
+        .forEach(page=>{
+            page.classList.remove("active");
+        });
 
-<div class="task">
+    document.getElementById(id)
+        .classList.add("active");
 
-<input type="checkbox">
+    document.querySelectorAll(".nav-btn")
+        .forEach(btn=>{
+            btn.classList.remove("active");
+        });
 
-<span>${t}</span>
+    if(button){
+        button.classList.add("active");
+    }
 
-</div>
+    if(id==="mapPage"){
 
-<span class="badge">
-Нова
-</span>
+        setTimeout(()=>{
+            if(map) map.invalidateSize();
+        },200);
 
-</div>
-`
+    }
+
+}
+
+
+/* MAP */
+
+let map;
+
+function initMap(){
+
+    if(map) return;
+
+    map=L.map("map").setView(
+        [43.2072,27.9160],
+        13
+    );
+
+    L.tileLayer(
+        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        {
+            attribution:
+            '&copy; OpenStreetMap contributors'
+        }
+    ).addTo(map);
+
+
+    /* ВИНС */
+
+    L.marker(
+        [43.2076,27.9167]
+    )
+    .addTo(map)
+    .bindPopup(
+        "<b>🎓 Икономически университет – Варна</b><br>ВИНС"
+    );
+
+
+    /* Примерни важни спирки */
+
+    const stops=[
+        [43.2070,27.9185,"Спирка ВИНС"],
+        [43.2102,27.9140,"Спирка Чаталджа"],
+        [43.2044,27.9182,"Спирка Център"],
+        [43.2150,27.9200,"Спирка Почивка"],
+        [43.2020,27.9100,"Спирка Катедрала"]
+    ];
+
+    stops.forEach(stop=>{
+
+        L.circleMarker(
+            [stop[0],stop[1]],
+            {
+                radius:7,
+                color:"#6758d9",
+                fillColor:"#6758d9",
+                fillOpacity:.8
+            }
+        )
+        .addTo(map)
+        .bindPopup(
+            "<b>🚌 "+stop[2]+"</b><br>Натисни за информация за линиите."
+        );
+
+    });
+
+}
+
+
+/* VINS */
+
+function goToVINS(){
+
+    showPage("mapPage");
+
+    setTimeout(()=>{
+
+        map.setView(
+            [43.2076,27.9167],
+            16
+        );
+
+    },200);
+
+}
+
+
+/* LOCATION */
+
+function findLocation(){
+
+    if(!navigator.geolocation){
+
+        alert("Браузърът не поддържа местоположение.");
+        return;
+
+    }
+
+    navigator.geolocation.getCurrentPosition(
+
+        position=>{
+
+            const lat=position.coords.latitude;
+            const lng=position.coords.longitude;
+
+            map.setView(
+                [lat,lng],
+                16
+            );
+
+            L.marker(
+                [lat,lng]
+            )
+            .addTo(map)
+            .bindPopup(
+                "📍 Ти си тук"
+            )
+            .openPopup();
+
+        },
+
+        ()=>{
+            alert(
+                "Не успях да получа местоположението."
+            );
+        }
+
+    );
+
+}
+
+
+/* REAL TRANSPORT */
+
+function openTransportMap(){
+
+    window.open(
+        "https://itransport.varna.bg/Map/Index.html#/",
+        "_blank"
+    );
+
+}
+
+
+/* START */
+
+window.addEventListener(
+    "DOMContentLoaded",
+    loadApp
 );
-
-}
-
-function saveNote(){
-
-localStorage.setItem(
-"unifloNote",
-document.getElementById("note").value
-);
-
-alert("Бележката е запазена.");
-}
-
-function filterBuses(){
-
-const q=
-(document.getElementById("busSearch")?.value||"")
-.toLowerCase();
-
-document
-.querySelectorAll(".bus")
-.forEach(el=>{
-
-el.style.display=
-(!q||
-el.innerText.toLowerCase().includes(q))
-?"flex"
-:"none";
-
-});
-
-}
-
-function filterPlaces(q){
-
-document
-.querySelectorAll("#placesGrid .place")
-.forEach(el=>{
-
-el.style.display=
-el.innerText
-.toLowerCase()
-.includes(q.toLowerCase())
-?"block"
-:"none";
-
-});
-
-}
-
-render();
 
 </script>
 
